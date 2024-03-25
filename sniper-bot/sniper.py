@@ -2,6 +2,7 @@ import requests
 import time
 import datetime
 import requests
+from goplus.token import Token
 
 BASESCAN_API_URL = "https://api.basescan.org/api"
 BASESCAN_API_KEY = "8UPKW51SE8WMJDJUR1DA7D6YTDSB4MDW8N"
@@ -47,10 +48,14 @@ while True:
             timestamp = datetime.datetime.fromtimestamp(int(pool['createdAtTimestamp']))
             liquidity = float(pool['liquidity'])
             token1_address = pool['token1']['id']
+            token1_security_data = Token().token_security(
+                chain_id="8453", addresses=[token1_address]
+            )
             if not is_contract_verifiable(token1_address):
                 print(f"Warning: Token1 address {token1_address} is not verifiable")
             else:
                 print(f"Token1 address {token1_address} is verifiable")
+                print(f"Token1 security data: {token1_security_data}")
             print(f"Pair: {pool['token0']['symbol']}/{pool['token1']['symbol']}")
             print(f"Created at: {timestamp}")
             print(f"Liquidity: {liquidity:.2f}")
