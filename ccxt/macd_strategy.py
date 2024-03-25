@@ -46,19 +46,18 @@ while True:
                not order_created:
                 # Create a market order
                 order = exchange.create_market_buy_order(symbol, amount)
+                print(f'Order created at price {last_row["close"]}')
 
                 # Set the stop loss and take profit prices
                 stop_loss_price = last_row['EMA_100']
                 take_profit_price = last_row['close'] * (1 + take_profit_ratio / 100)
 
                 # Create a stop loss order
-                stop_loss_order = exchange.create_order(symbol, 'stop_loss_limit', 'sell', amount, stop_loss_price, {'stopPrice': stop_loss_price})
+                stop_loss_order = exchange.create_order(symbol, 'limit', 'sell', amount, stop_loss_price, {'stopPrice': stop_loss_price})
+                print(f'Stop loss order created at price {stop_loss_price}')
 
                 # Create a take profit order
-                take_profit_order = exchange.create_order(symbol, 'take_profit_limit', 'sell', amount, take_profit_price, {'stopPrice': take_profit_price})
-
-                print(f'Order created at price {last_row["close"]}')
-                print(f'Stop loss order created at price {stop_loss_price}')
+                take_profit_order = exchange.create_order(symbol, 'limit', 'sell', amount, take_profit_price, {'stopPrice': take_profit_price})
                 print(f'Take profit order created at price {take_profit_price}')
 
                 order_created = True
