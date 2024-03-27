@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 import ccxt
+import os
+from dotenv import load_dotenv
 from pprint import pprint
 
+load_dotenv()
 print('CCXT Version:', ccxt.__version__)
 
 exchange = ccxt.binance({
-    'apiKey': 'f79ce8018b766cc715671af97d93394e28914413a5b98f916253af121f519e7e',
-    'secret': 'b4a17b37259df7c4c701822a008f9c09a7021f56c07db4d77afc5839fb61f50e',
+    'apiKey': os.getenv('TESTNET_BINANCE_API_KEY'),
+    'secret': os.getenv('TESTNET_BINANCE_SECRET'),
     'enableRateLimit': True,  # https://github.com/ccxt/ccxt/wiki/Manual#rate-limit
     'options': {
         'defaultType': 'future',
