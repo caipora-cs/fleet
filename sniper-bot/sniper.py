@@ -2,20 +2,23 @@ import requests
 import time
 import datetime
 import requests
+import os
 from goplus.token import Token
+from dotenv import load_dotenv
 
-BASESCAN_API_URL = "https://api.basescan.org/api"
-BASESCAN_API_KEY = "8UPKW51SE8WMJDJUR1DA7D6YTDSB4MDW8N"
+load_dotenv()
+SCAN_API_URL = os.getenv("BASESCAN_API_URL") 
+SCAN_API_KEY = os.getenv("BASESCAN_API_KEY") 
 
 def is_contract_verifiable(contract_address):
     params = {
         "module": "contract",
         "action": "getsourcecode",
         "address": contract_address,
-        "apikey": BASESCAN_API_KEY
+        "apikey": SCAN_API_KEY
     }
 
-    response = requests.get(BASESCAN_API_URL, params=params)
+    response = requests.get(SCAN_API_URL, params=params)
     data = response.json()
 
     return 'status' in data and data['status'] == '1' and 'result' in data and len(data['result']) > 0 and data['result'][0]['ContractName'] != ''
