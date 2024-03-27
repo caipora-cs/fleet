@@ -1,2 +1,7 @@
-##### Credentials
-Look for a way to utiliza safe authentication in python. Through envs.
+##### TODO:
+
+- Design Database for transaction log
+- Docker aplication bundling for cloud
+- Refactor code into OOP
+- Backtesting ccxt on old Data
+-
