@@ -6,6 +6,7 @@ import os
 from goplus.token import Token
 from dotenv import load_dotenv
 
+# Load environment variables from .env file for API blockchain scan acess
 load_dotenv()
 SCAN_API_URL = os.getenv("BASESCAN_API_URL") 
 SCAN_API_KEY = os.getenv("BASESCAN_API_KEY") 
