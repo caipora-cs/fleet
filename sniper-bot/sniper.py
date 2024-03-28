@@ -1,3 +1,5 @@
+# pylint: disable=missing-module-docstring
+
 import requests
 import time
 import datetime
@@ -8,21 +10,29 @@ from dotenv import load_dotenv
 
 # Load environment variables from .env file for API blockchain scan acess
 load_dotenv()
-SCAN_API_URL = os.getenv("BASESCAN_API_URL") 
-SCAN_API_KEY = os.getenv("BASESCAN_API_KEY") 
+SCAN_API_URL = os.getenv("BASESCAN_API_URL")
+SCAN_API_KEY = os.getenv("BASESCAN_API_KEY")
+
 
 def is_contract_verifiable(contract_address):
     params = {
         "module": "contract",
         "action": "getsourcecode",
         "address": contract_address,
-        "apikey": SCAN_API_KEY
+        "apikey": SCAN_API_KEY,
     }
 
     response = requests.get(SCAN_API_URL, params=params)
     data = response.json()
 
-    return 'status' in data and data['status'] == '1' and 'result' in data and len(data['result']) > 0 and data['result'][0]['ContractName'] != ''
+    return (
+        "status" in data
+        and data["status"] == "1"
+        and "result" in data
+        and len(data["result"]) > 0
+        and data["result"][0]["ContractName"] != ""
+    )
+
 
 url = "https://gateway-arbitrum.network.thegraph.com/api/329a723890246b9fac8f970aa2ef9425/subgraphs/id/HMuAwufqZ1YCRmzL2SfHTVkzZovC9VL2UAKhjvRqKiR1"
 query = """
@@ -44,14 +54,14 @@ query = """
 """
 
 while True:
-    response = requests.post(url, json={'query': query})
+    response = requests.post(url, json={"query": query})
     data = response.json()
 
-    if 'data' in data and 'pools' in data['data']:
-        for pool in data['data']['pools']:
-            timestamp = datetime.datetime.fromtimestamp(int(pool['createdAtTimestamp']))
-            liquidity = float(pool['liquidity'])
-            token1_address = pool['token1']['id']
+    if "data" in data and "pools" in data["data"]:
+        for pool in data["data"]["pools"]:
+            timestamp = datetime.datetime.fromtimestamp(int(pool["createdAtTimestamp"]))
+            liquidity = float(pool["liquidity"])
+            token1_address = pool["token1"]["id"]
             token1_security_data = Token().token_security(
                 chain_id="8453", addresses=[token1_address]
             )

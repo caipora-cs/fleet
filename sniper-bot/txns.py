@@ -1,6 +1,5 @@
-from web3 import Web3, constants
 import json
-import time
+from web3 import Web3 
 # from style import style
 
 class TXN():
