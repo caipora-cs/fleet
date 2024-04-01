@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 load_dotenv()
 SCAN_API_URL = os.getenv("SCAN_API_URL")
 SCAN_API_KEY = os.getenv("SCAN_API_KEY")
+# Configure the Graph API URL and query
 url = "https://gateway-arbitrum.network.thegraph.com/api/329a723890246b9fac8f970aa2ef9425/subgraphs/id/HMuAwufqZ1YCRmzL2SfHTVkzZovC9VL2UAKhjvRqKiR1"
 query = """
 {
@@ -30,15 +31,13 @@ query = """
 }
 """
 
-
 class Sniper:
     """Bot Main Class"""
-
-    def __init__(self, api_url, api_key):
+    def __init__(self, api_url: str, api_key: str) -> None:
         self.api_url = api_url
         self.api_key = api_key
 
-    def is_contract_verifiable(self, contract_address):
+    def is_contract_verifiable(self, contract_address: str):
         """Check if a contract is verifiable on the blockchain scan API."""
         params = {
             "module": "contract",
@@ -58,12 +57,8 @@ class Sniper:
             and data["result"][0]["ContractName"] != ""
         )
 
-    def query_data(self, query):
-        """
-        Query data from the Graph.
-        Args:
-            query (str): The query to send to a specific Graph Endpoint.
-        """
+    def query_data(self, _query: str) -> dict:
+        """Query data from the Graph."""
         response = requests.post(url, json={"query": query}, timeout=10)
         return response.json()
         # Add other methods here...

@@ -15,7 +15,7 @@ latest_block = web3.eth.block_number
 factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
 class Recon:
     """This class is responsible for monitoring the factory contract for new pairs."""
-    def __init__(self, factory):
+    def __init__(self, factory: str) -> None:
         self.factory = factory
         with open("abis/uniswapV2abi.json", encoding="utf-8") as f:
             abi = json.load(f)
@@ -24,6 +24,7 @@ class Recon:
         )
 
 def main():
+    """Main function to run the bot."""
     recon = Recon(factory_address)
     while True:
         # Get the new PairCreated events
