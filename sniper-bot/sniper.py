@@ -58,37 +58,52 @@ class Sniper:
             and data["result"][0]["ContractName"] != ""
         )
 
-    # Add other methods here...
+    def query_data(self, query):
+        """
+        Query data from the Graph.
+        Args:
+            query (str): The query to send to a specific Graph Endpoint.
+        """
+        response = requests.post(url, json={"query": query}, timeout=10)
+        return response.json()
+        # Add other methods here...
 
 
 def main():
     """Main function."""
     sniper = Sniper(SCAN_API_URL, SCAN_API_KEY)
     while True:
-        response = requests.post(url, json={"query": query}, timeout=10)
-        data = response.json()
+        try:
+            data = sniper.query_data(query)
+            # Check for pools datapoints and verify the contract through Scan
+            # and Goplus and print for the user.
+            if "data" in data and "pools" in data["data"]:
+                for pool in data["data"]["pools"]:
+                    timestamp = datetime.datetime.fromtimestamp(
+                        int(pool["createdAtTimestamp"])
+                    )
+                    liquidity = float(pool["liquidity"])
+                    token1_address = pool["token1"]["id"]
+                    token1_security_data = Token().token_security(
+                        chain_id="8453", addresses=[token1_address]
+                    )
+                    # Pools data for user
+                    print(
+                        f"Pair: {pool['token0']['symbol']}/{pool['token1']['symbol']}"
+                    )
+                    print(f"Created at: {timestamp}")
+                    print(f"Liquidity: {liquidity:.2f}")
+                    # Verify the contract and Check for security data
+                    if not sniper.is_contract_verifiable(token1_address):
+                        print(
+                            f"Warning: Token1 address {token1_address} is not verifiable\n\n"
+                        )
+                    else:
+                        print(f"Token1 address {token1_address} is verifiable")
+                        print(f"Token1 security data: {token1_security_data}\n\n")
 
-        if "data" in data and "pools" in data["data"]:
-            for pool in data["data"]["pools"]:
-                timestamp = datetime.datetime.fromtimestamp(
-                    int(pool["createdAtTimestamp"])
-                )
-                liquidity = float(pool["liquidity"])
-                token1_address = pool["token1"]["id"]
-                token1_security_data = Token().token_security(
-                    chain_id="8453", addresses=[token1_address]
-                )
-                if not sniper.is_contract_verifiable(token1_address):
-                    print(f"Warning: Token1 address {token1_address} is not verifiable")
-                else:
-                    print(f"Token1 address {token1_address} is verifiable")
-                    print(f"Token1 security data: {token1_security_data}")
-                print(f"Pair: {pool['token0']['symbol']}/{pool['token1']['symbol']}")
-                print(f"Created at: {timestamp}")
-                print(f"Liquidity: {liquidity:.2f}")
-        else:
-            print(f"Error: Unexpected response: {data}")
-
+        except requests.exceptions.RequestException as error:
+            print(f"Error: Unexpected response: {error}")
         time.sleep(60)
 
 
