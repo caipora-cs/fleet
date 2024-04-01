@@ -1,10 +1,9 @@
 # pylint: disable=missing-module-docstring
-
-import requests
+# pylint: disable=invalid-name
 import time
 import datetime
-import requests
 import os
+import requests
 from goplus.token import Token
 from dotenv import load_dotenv
 
@@ -12,28 +11,6 @@ from dotenv import load_dotenv
 load_dotenv()
 SCAN_API_URL = os.getenv("BASESCAN_API_URL")
 SCAN_API_KEY = os.getenv("BASESCAN_API_KEY")
-
-
-def is_contract_verifiable(contract_address):
-    params = {
-        "module": "contract",
-        "action": "getsourcecode",
-        "address": contract_address,
-        "apikey": SCAN_API_KEY,
-    }
-
-    response = requests.get(SCAN_API_URL, params=params)
-    data = response.json()
-
-    return (
-        "status" in data
-        and data["status"] == "1"
-        and "result" in data
-        and len(data["result"]) > 0
-        and data["result"][0]["ContractName"] != ""
-    )
-
-
 url = "https://gateway-arbitrum.network.thegraph.com/api/329a723890246b9fac8f970aa2ef9425/subgraphs/id/HMuAwufqZ1YCRmzL2SfHTVkzZovC9VL2UAKhjvRqKiR1"
 query = """
 {
@@ -53,27 +30,67 @@ query = """
 }
 """
 
-while True:
-    response = requests.post(url, json={"query": query})
-    data = response.json()
 
-    if "data" in data and "pools" in data["data"]:
-        for pool in data["data"]["pools"]:
-            timestamp = datetime.datetime.fromtimestamp(int(pool["createdAtTimestamp"]))
-            liquidity = float(pool["liquidity"])
-            token1_address = pool["token1"]["id"]
-            token1_security_data = Token().token_security(
-                chain_id="8453", addresses=[token1_address]
-            )
-            if not is_contract_verifiable(token1_address):
-                print(f"Warning: Token1 address {token1_address} is not verifiable")
-            else:
-                print(f"Token1 address {token1_address} is verifiable")
-                print(f"Token1 security data: {token1_security_data}")
-            print(f"Pair: {pool['token0']['symbol']}/{pool['token1']['symbol']}")
-            print(f"Created at: {timestamp}")
-            print(f"Liquidity: {liquidity:.2f}")
-    else:
-        print(f"Error: Unexpected response: {data}")
+class Sniper:
+    """Bot Main Class"""
 
-    time.sleep(60)  # wait for 60 seconds before the next request
+    def __init__(self, api_url, api_key):
+        self.api_url = api_url
+        self.api_key = api_key
+
+    def is_contract_verifiable(self, contract_address):
+        """Check if a contract is verifiable on the blockchain scan API."""
+        params = {
+            "module": "contract",
+            "action": "getsourcecode",
+            "address": contract_address,
+            "apikey": self.api_key,
+        }
+
+        response = requests.get(self.api_url, params=params, timeout=10)
+        data = response.json()
+
+        return (
+            "status" in data
+            and data["status"] == "1"
+            and "result" in data
+            and len(data["result"]) > 0
+            and data["result"][0]["ContractName"] != ""
+        )
+
+    # Add other methods here...
+
+
+def main():
+    """Main function."""
+    sniper = Sniper(SCAN_API_URL, SCAN_API_KEY)
+    while True:
+        response = requests.post(url, json={"query": query}, timeout=10)
+        data = response.json()
+
+        if "data" in data and "pools" in data["data"]:
+            for pool in data["data"]["pools"]:
+                timestamp = datetime.datetime.fromtimestamp(
+                    int(pool["createdAtTimestamp"])
+                )
+                liquidity = float(pool["liquidity"])
+                token1_address = pool["token1"]["id"]
+                token1_security_data = Token().token_security(
+                    chain_id="8453", addresses=[token1_address]
+                )
+                if not sniper.is_contract_verifiable(token1_address):
+                    print(f"Warning: Token1 address {token1_address} is not verifiable")
+                else:
+                    print(f"Token1 address {token1_address} is verifiable")
+                    print(f"Token1 security data: {token1_security_data}")
+                print(f"Pair: {pool['token0']['symbol']}/{pool['token1']['symbol']}")
+                print(f"Created at: {timestamp}")
+                print(f"Liquidity: {liquidity:.2f}")
+        else:
+            print(f"Error: Unexpected response: {data}")
+
+        time.sleep(60)
+
+
+if __name__ == "__main__":
+    main()

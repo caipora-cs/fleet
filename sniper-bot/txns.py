@@ -1,3 +1,5 @@
+i# pylint: disable=missing-module-docstring
+# pylint: disable=invalid-name
 import json
 from web3 import Web3 
 # from style import style
