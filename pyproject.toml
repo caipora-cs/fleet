@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "fleet"
+version = "0.1.0"
+description = "A multi-modular trading bot"
+authors = ["caipora"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.31.0"
+goplus = "^0.2.3"
+python-dotenv = "^1.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
