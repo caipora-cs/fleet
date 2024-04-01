@@ -9,8 +9,8 @@ from dotenv import load_dotenv
 
 # Load environment variables from .env file for API blockchain scan acess
 load_dotenv()
-SCAN_API_URL = os.getenv("BASESCAN_API_URL")
-SCAN_API_KEY = os.getenv("BASESCAN_API_KEY")
+SCAN_API_URL = os.getenv("SCAN_API_URL")
+SCAN_API_KEY = os.getenv("SCAN_API_KEY")
 url = "https://gateway-arbitrum.network.thegraph.com/api/329a723890246b9fac8f970aa2ef9425/subgraphs/id/HMuAwufqZ1YCRmzL2SfHTVkzZovC9VL2UAKhjvRqKiR1"
 query = """
 {
