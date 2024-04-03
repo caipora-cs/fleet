@@ -22,6 +22,11 @@ class Recon:
         self.contract = web3.eth.contract(
             address=factory, abi=abi
         )
+    
+    #contract.events.PairCreated.get_logs(fromBlock=latest_block)
+    #@property properties i might use for the Recon class
+    #@cached_property for caching for repetitive calls ATT: if prop changed it will not be updated
+    #@lru_cache for function calls
 
 def main():
     """Main function to run the bot."""
