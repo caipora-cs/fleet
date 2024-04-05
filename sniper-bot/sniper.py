@@ -10,8 +10,8 @@ from recon import Recon
 
 # Load environment variables from .env file for API blockchain scan acess
 load_dotenv()
-SCAN_API_URL = os.getenv("SCAN_API_URL")
-SCAN_API_KEY = os.getenv("SCAN_API_KEY")
+SCAN_API_URL = os.getenv("BASESCAN_API_URL")
+SCAN_API_KEY = os.getenv("BASESCAN_API_KEY")
 # Configure the Graph API URL and query
 url = "https://gateway-arbitrum.network.thegraph.com/api/329a723890246b9fac8f970aa2ef9425/subgraphs/id/HMuAwufqZ1YCRmzL2SfHTVkzZovC9VL2UAKhjvRqKiR1"
 query = """
@@ -31,9 +31,12 @@ query = """
     }
 }
 """
-factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
+FACTORY_ADDRESS = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
+
+
 class Sniper:
     """Bot Main Class"""
+
     def __init__(self, api_url: str, api_key: str) -> None:
         self.api_url = api_url
         self.api_key = api_key
@@ -68,14 +71,16 @@ class Sniper:
 def main():
     """Main function."""
     sniper = Sniper(SCAN_API_URL, SCAN_API_KEY)
-    recon = Recon(factory_address)
+    recon = Recon(FACTORY_ADDRESS)
     while True:
         try:
-            data = sniper.query_data(query)
+            data_univ3 = sniper.query_data(query)
+            # recon.run()
+
             # Check for pools datapoints and verify the contract through Scan
             # and Goplus and print for the user.
-            if "data" in data and "pools" in data["data"]:
-                for pool in data["data"]["pools"]:
+            if "data" in data_univ3 and "pools" in data_univ3["data"]:
+                for pool in data_univ3["data"]["pools"]:
                     timestamp = datetime.datetime.fromtimestamp(
                         int(pool["createdAtTimestamp"])
                     )
@@ -85,6 +90,7 @@ def main():
                         chain_id="8453", addresses=[token1_address]
                     )
                     # Pools data for user
+                    print("UniV3\n")
                     print(
                         f"Pair: {pool['token0']['symbol']}/{pool['token1']['symbol']}"
                     )
@@ -102,6 +108,7 @@ def main():
         except requests.exceptions.RequestException as error:
             print(f"Error: Unexpected response: {error}")
         time.sleep(60)
+        recon.run()
 
 
 if __name__ == "__main__":
