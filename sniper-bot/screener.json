@@ -1,0 +1,121 @@
+{
+    "schemaVersion": "1.0.0",
+    "pairs": [
+        {
+            "chainId": "base",
+            "dexId": "uniswap",
+            "url": "https://dexscreener.com/base/0x2114cf47f9932250291011d400715aea6adb61ae",
+            "pairAddress": "0x2114cf47f9932250291011D400715AEA6AdB61ae",
+            "labels": [
+                "v2"
+            ],
+            "baseToken": {
+                "address": "0xc9dE22Ab48efd1D5a2313BF1B5287fA2BAa839D3",
+                "name": "BAC MAN",
+                "symbol": "BAC"
+            },
+            "quoteToken": {
+                "address": "0x4200000000000000000000000000000000000006",
+                "name": "Wrapped Ether",
+                "symbol": "WETH"
+            },
+            "priceNative": "0.000000001957",
+            "priceUsd": "0.000006481",
+            "txns": {
+                "m5": {
+                    "buys": 0,
+                    "sells": 0
+                },
+                "h1": {
+                    "buys": 0,
+                    "sells": 0
+                },
+                "h6": {
+                    "buys": 28,
+                    "sells": 2
+                },
+                "h24": {
+                    "buys": 28,
+                    "sells": 2
+                }
+            },
+            "volume": {
+                "h24": 1632.01,
+                "h6": 1632.01,
+                "h1": 0,
+                "m5": 0
+            },
+            "priceChange": {
+                "m5": 0,
+                "h1": 0,
+                "h6": 91.06,
+                "h24": 91.06
+            },
+            "liquidity": {
+                "usd": 0,
+                "base": 2.261e-11,
+                "quote": 1e-18
+            },
+            "fdv": 6482,
+            "pairCreatedAt": 1712336561000
+        }
+    ],
+    "pair": {
+        "chainId": "base",
+        "dexId": "uniswap",
+        "url": "https://dexscreener.com/base/0x2114cf47f9932250291011d400715aea6adb61ae",
+        "pairAddress": "0x2114cf47f9932250291011D400715AEA6AdB61ae",
+        "labels": [
+            "v2"
+        ],
+        "baseToken": {
+            "address": "0xc9dE22Ab48efd1D5a2313BF1B5287fA2BAa839D3",
+            "name": "BAC MAN",
+            "symbol": "BAC"
+        },
+        "quoteToken": {
+            "address": "0x4200000000000000000000000000000000000006",
+            "name": "Wrapped Ether",
+            "symbol": "WETH"
+        },
+        "priceNative": "0.000000001957",
+        "priceUsd": "0.000006481",
+        "txns": {
+            "m5": {
+                "buys": 0,
+                "sells": 0
+            },
+            "h1": {
+                "buys": 0,
+                "sells": 0
+            },
+            "h6": {
+                "buys": 28,
+                "sells": 2
+            },
+            "h24": {
+                "buys": 28,
+                "sells": 2
+            }
+        },
+        "volume": {
+            "h24": 1632.01,
+            "h6": 1632.01,
+            "h1": 0,
+            "m5": 0
+        },
+        "priceChange": {
+            "m5": 0,
+            "h1": 0,
+            "h6": 91.06,
+            "h24": 91.06
+        },
+        "liquidity": {
+            "usd": 0,
+            "base": 2.261e-11,
+            "quote": 1e-18
+        },
+        "fdv": 6482,
+        "pairCreatedAt": 1712336561000
+    }
+}

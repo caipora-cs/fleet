@@ -1,6 +1,7 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=invalid-name
 import json
+import requests
 from web3 import Web3
 from goplus.token import Token
 
@@ -46,6 +47,22 @@ class Recon:
                     chain_id="8453", addresses=[token1]
                 )
                 print(f"Token1 security data: {token1_security_data}\n\n")
+
+    def screener(self,chain_id: str, pair_address: str):
+        """
+        Perform an API call to Dexscreener and retrieve information about a specific pair.
+        """
+        url= f"https://api.dexscreener.com/latest/dex/pairs/{chain_id}/{pair_address}"
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            return data
+        except requests.RequestException as e:
+            print(f"Error fetching data: {e}")
+            return None
+
+
 
     # contract.events.PairCreated.get_logs(fromBlock=latest_block)
     # @property properties i might use for the Recon class
