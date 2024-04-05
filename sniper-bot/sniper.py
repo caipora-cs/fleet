@@ -6,6 +6,7 @@ import os
 import requests
 from goplus.token import Token
 from dotenv import load_dotenv
+from recon import Recon
 
 # Load environment variables from .env file for API blockchain scan acess
 load_dotenv()
@@ -30,7 +31,7 @@ query = """
     }
 }
 """
-
+factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
 class Sniper:
     """Bot Main Class"""
     def __init__(self, api_url: str, api_key: str) -> None:
@@ -67,6 +68,7 @@ class Sniper:
 def main():
     """Main function."""
     sniper = Sniper(SCAN_API_URL, SCAN_API_KEY)
+    recon = Recon(factory_address)
     while True:
         try:
             data = sniper.query_data(query)
