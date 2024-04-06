@@ -1,5 +1,6 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=invalid-name
+import json
 import time
 import datetime
 import os
@@ -104,11 +105,30 @@ def main():
                     else:
                         print(f"Token1 address {token1_address} is verifiable")
                         print(f"Token1 security data: {token1_security_data}\n\n")
+                        security = token1_security_data.to_dict()
+                        if token1_address in security["result"]:
+                            dex_list = security["result"][token1_address]["dex"]
+                            if dex_list is not None:
+                                for dex in dex_list:
+                                    pair_address = dex["pair"]
+                                    pair_data = recon.screener(
+                                        chain_id="base", pair_address=pair_address
+                                    )
+                                    print(json.dumps(pair_data, indent=4))
+                                    if (
+                                        pair_data
+                                        and pair_data["pair"]
+                                        and pair_data["pair"]["liquidity"]
+                                        and pair_data["pair"]["liquidity"]["usd"]
+                                        > 20000
+                                    ):
+                                        print("PREPARE TO BUY")
 
         except requests.exceptions.RequestException as error:
             print(f"Error: Unexpected response: {error}")
-        time.sleep(60)
-        recon.run()
+        print("Starting Univ2 Recon...\n")
+        recon.run(iterations=200)
+        time.sleep(30)
 
 
 if __name__ == "__main__":

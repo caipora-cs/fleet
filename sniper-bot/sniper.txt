@@ -1,0 +1,569 @@
+UniV3
+
+Pair: WETH/BLUNT
+Created at: 2024-04-06 16:58:59
+Liquidity: 2847900030681706496.00
+Warning: Token1 address 0xb6d580c2328df2be855a84ee5c106ddefdbf6e02 is not verifiable
+
+
+UniV3
+
+Pair: WETH/$GRACIAS
+Created at: 2024-04-06 16:57:41
+Liquidity: 31622745249762510897152.00
+Warning: Token1 address 0x48bd86c8e4f3674d4f971fca1ea4f8ddb00651cf is not verifiable
+
+
+UniV3
+
+Pair: WETH/Lionx
+Created at: 2024-04-06 16:56:49
+Liquidity: 1001001663281983389696.00
+Token1 address 0xa4e3406b82de9cc19d7add701fed11c482c7135b is verifiable
+Token1 security data: {'code': 1,
+ 'message': 'OK',
+ 'result': {'0xa4e3406b82de9cc19d7add701fed11c482c7135b': {'anti_whale_modifiable': None,
+                                                           'buy_tax': '',
+                                                           'can_take_back_ownership': None,
+                                                           'cannot_buy': '0',
+                                                           'cannot_sell_all': None,
+                                                           'creator_address': '0x70B03a836D4B204c9e5584325250fFC6C7050cb7',
+                                                           'creator_balance': '15009463.5296999121',
+                                                           'creator_percent': '1.000000',
+                                                           'dex': None,
+                                                           'external_call': None,
+                                                           'fake_token': None,
+                                                           'hidden_owner': None,
+                                                           'holder_count': '2',
+                                                           'holders': [{'address': '0x70B03a836D4B204c9e5584325250fFC6C7050cb7',
+                                                                        'balance': '14009463.529699912157476595',
+                                                                        'is_contract': 0,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '0.933375',
+                                                                        'tag': ''},
+                                                                       {'address': '0x6515d4992FE61E071BA95DC3C2612DA8bA9eCb18',
+                                                                        'balance': '999999.999999999942523405',
+                                                                        'is_contract': 1,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '0.066625',
+                                                                        'tag': ''}],
+                                                           'honeypot_with_same_creator': '0',
+                                                           'is_airdrop_scam': None,
+                                                           'is_anti_whale': None,
+                                                           'is_blacklisted': None,
+                                                           'is_honeypot': None,
+                                                           'is_in_dex': '0',
+                                                           'is_mintable': None,
+                                                           'is_open_source': '0',
+                                                           'is_proxy': None,
+                                                           'is_true_token': None,
+                                                           'is_whitelisted': None,
+                                                           'lp_holder_count': None,
+                                                           'lp_holders': None,
+                                                           'lp_total_supply': None,
+                                                           'note': None,
+                                                           'other_potential_risks': None,
+                                                           'owner_address': '',
+                                                           'owner_balance': None,
+                                                           'owner_change_balance': None,
+                                                           'owner_percent': None,
+                                                           'personal_slippage_modifiable': None,
+                                                           'selfdestruct': None,
+                                                           'sell_tax': '',
+                                                           'slippage_modifiable': None,
+                                                           'token_name': 'Lionx',
+                                                           'token_symbol': 'Lionx',
+                                                           'total_supply': '15009463.52969991',
+                                                           'trading_cooldown': None,
+                                                           'transfer_pausable': None,
+                                                           'trust_list': None}}}
+
+
+UniV3
+
+Pair: WETH/TRUMP
+Created at: 2024-04-06 16:49:33
+Liquidity: 9950002192173840384.00
+Token1 address 0xdc12bc2f4f6a24f91c28ea06800cae97245399e3 is verifiable
+Token1 security data: {'code': 1,
+ 'message': 'OK',
+ 'result': {'0xdc12bc2f4f6a24f91c28ea06800cae97245399e3': {'anti_whale_modifiable': '0',
+                                                           'buy_tax': '0',
+                                                           'can_take_back_ownership': '0',
+                                                           'cannot_buy': '0',
+                                                           'cannot_sell_all': '0',
+                                                           'creator_address': '0x0A2e6013b7f6683E47796d787d60344cE81d1Bd1',
+                                                           'creator_balance': '16.527539830832889695',
+                                                           'creator_percent': '0.165275',
+                                                           'dex': [{'liquidity': '889.91720673',
+                                                                    'name': 'UniswapV3',
+                                                                    'pair': '0x35429ba63e701c4493eda2d1b6f24c57ec6f601e'}],
+                                                           'external_call': '0',
+                                                           'fake_token': None,
+                                                           'hidden_owner': '0',
+                                                           'holder_count': '6',
+                                                           'holders': [{'address': '0x35429Ba63E701c4493edA2d1B6F24C57ec6F601e',
+                                                                        'balance': '79.566734354914366766',
+                                                                        'is_contract': 1,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '0.795667',
+                                                                        'tag': ''},
+                                                                       {'address': '0x0A2e6013b7f6683E47796d787d60344cE81d1Bd1',
+                                                                        'balance': '16.527539830832889695',
+                                                                        'is_contract': 0,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '0.165275',
+                                                                        'tag': ''},
+                                                                       {'address': '0x679777a4dD1f3ac22eE4f5f92f3a4CDC9d941AAb',
+                                                                        'balance': '1.936499756129203464',
+                                                                        'is_contract': 0,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '0.019365',
+                                                                        'tag': ''},
+                                                                       {'address': '0x70311126c52Bb601ba1bd5acB95e50E2DC6EB5D1',
+                                                                        'balance': '1.34380900605836364',
+                                                                        'is_contract': 0,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '0.013438',
+                                                                        'tag': ''},
+                                                                       {'address': '0x044F9Be55fC73eE3Ed70426d9B39Ce7B8eC3f2b6',
+                                                                        'balance': '0.625364627510513',
+                                                                        'is_contract': 0,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '0.006254',
+                                                                        'tag': ''},
+                                                                       {'address': '0x7c73100301b2A14A279E7cB7C4413c953693B148',
+                                                                        'balance': '0.000052424554663435',
+                                                                        'is_contract': 0,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '0.000001',
+                                                                        'tag': ''}],
+                                                           'honeypot_with_same_creator': '0',
+                                                           'is_airdrop_scam': None,
+                                                           'is_anti_whale': '0',
+                                                           'is_blacklisted': '0',
+                                                           'is_honeypot': '0',
+                                                           'is_in_dex': '1',
+                                                           'is_mintable': '0',
+                                                           'is_open_source': '1',
+                                                           'is_proxy': '0',
+                                                           'is_true_token': None,
+                                                           'is_whitelisted': '1',
+                                                           'lp_holder_count': '1',
+                                                           'lp_holders': [{'address': '0x0a2e6013b7f6683e47796d787d60344ce81d1bd1',
+                                                                           'balance': '10.000002203189788893',
+                                                                           'is_contract': 0,
+                                                                           'is_locked': 0,
+                                                                           'locked_detail': None,
+                                                                           'nft_list': [{'amount': '10.000002203189788893',
+                                                                                         'in_effect': '0',
+                                                                                         'nft_id': '132896',
+                                                                                         'nft_percentage': '1.000000000000000000',
+                                                                                         'value': '881.9553107544049943670'}],
+                                                                           'percent': '1.000000000000000000',
+                                                                           'tag': ''}],
+                                                           'lp_total_supply': '10.000002203189788893',
+                                                           'note': None,
+                                                           'other_potential_risks': None,
+                                                           'owner_address': '0x0a2e6013b7f6683e47796d787d60344ce81d1bd1',
+                                                           'owner_balance': '16.527539830832889695',
+                                                           'owner_change_balance': '0',
+                                                           'owner_percent': '0.165275',
+                                                           'personal_slippage_modifiable': '0',
+                                                           'selfdestruct': '0',
+                                                           'sell_tax': '0',
+                                                           'slippage_modifiable': '0',
+                                                           'token_name': 'Base '
+                                                                         'Trump '
+                                                                         'NFT ',
+                                                           'token_symbol': 'TRUMP',
+                                                           'total_supply': '100',
+                                                           'trading_cooldown': '0',
+                                                           'transfer_pausable': '0',
+                                                           'trust_list': None}}}
+
+
+UniV3
+
+Pair: WETH/BGIRL
+Created at: 2024-04-06 16:38:09
+Liquidity: 3164333457398246912.00
+Warning: Token1 address 0xfe72f39782bb0554a849a74830bc28bdd850995f is not verifiable
+
+
+UniV3
+
+Pair: WETH/basedpunks
+Created at: 2024-04-06 16:26:23
+Liquidity: 831792835021012151042048.00
+Warning: Token1 address 0x525eefa091acb2d04b9f248dd70db37fccd53b0c is not verifiable
+
+
+UniV3
+
+Pair: WETH/TOMOJI404
+Created at: 2024-04-06 16:20:53
+Liquidity: 0.00
+Token1 address 0x6c7134424331b73d2b75111c3be754b8427d53e0 is verifiable
+Token1 security data: {'code': 1,
+ 'message': 'OK',
+ 'result': {'0x6c7134424331b73d2b75111c3be754b8427d53e0': {'anti_whale_modifiable': '0',
+                                                           'buy_tax': '',
+                                                           'can_take_back_ownership': '0',
+                                                           'cannot_buy': '0',
+                                                           'cannot_sell_all': None,
+                                                           'creator_address': '0x462BC844744E39F8100632C255715A66059e2981',
+                                                           'creator_balance': '0',
+                                                           'creator_percent': '0.000000',
+                                                           'dex': [{'liquidity': '0.00000000',
+                                                                    'name': 'UniswapV3',
+                                                                    'pair': '0x106fe57791479dbece3e3ec6446021e5e2cc953c'}],
+                                                           'external_call': '0',
+                                                           'fake_token': None,
+                                                           'hidden_owner': '0',
+                                                           'holder_count': '1',
+                                                           'holders': [{'address': '0x091B9ecB85485A1b90feCf56D8C68b7285368611',
+                                                                        'balance': '10000',
+                                                                        'is_contract': 1,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '1.000000',
+                                                                        'tag': ''}],
+                                                           'honeypot_with_same_creator': '0',
+                                                           'is_airdrop_scam': None,
+                                                           'is_anti_whale': '0',
+                                                           'is_blacklisted': '0',
+                                                           'is_honeypot': '0',
+                                                           'is_in_dex': '1',
+                                                           'is_mintable': '1',
+                                                           'is_open_source': '1',
+                                                           'is_proxy': '0',
+                                                           'is_true_token': None,
+                                                           'is_whitelisted': '0',
+                                                           'lp_holder_count': None,
+                                                           'lp_holders': None,
+                                                           'lp_total_supply': None,
+                                                           'note': None,
+                                                           'other_potential_risks': None,
+                                                           'owner_address': '0x2f694c711225e97dc71e2a98c0a186ae3e1ad167',
+                                                           'owner_balance': '0',
+                                                           'owner_change_balance': '0',
+                                                           'owner_percent': '0.000000',
+                                                           'personal_slippage_modifiable': '0',
+                                                           'selfdestruct': '0',
+                                                           'sell_tax': '',
+                                                           'slippage_modifiable': '0',
+                                                           'token_name': 'Tomoji404',
+                                                           'token_symbol': 'TOMOJI404',
+                                                           'total_supply': '10000',
+                                                           'trading_cooldown': '0',
+                                                           'transfer_pausable': '0',
+                                                           'trust_list': None}}}
+
+
+UniV3
+
+Pair: WETH/TTST
+Created at: 2024-04-06 16:11:17
+Liquidity: 0.00
+Token1 address 0x9470dbd28e51c2f67bcf484a83e3f9cb263ffe7e is verifiable
+Token1 security data: {'code': 1,
+ 'message': 'OK',
+ 'result': {'0x9470dbd28e51c2f67bcf484a83e3f9cb263ffe7e': {'anti_whale_modifiable': '1',
+                                                           'buy_tax': '',
+                                                           'can_take_back_ownership': '0',
+                                                           'cannot_buy': '0',
+                                                           'cannot_sell_all': None,
+                                                           'creator_address': '0xF9e5F008cB71d51069C27b2e26dd5AFbc1498A87',
+                                                           'creator_balance': '100000000',
+                                                           'creator_percent': '1.000000',
+                                                           'dex': [{'liquidity': '0.00000000',
+                                                                    'name': 'UniswapV3',
+                                                                    'pair': '0x80ddf59ada2e6d8476d732e4f44b55090bd8d52b'}],
+                                                           'external_call': '0',
+                                                           'fake_token': None,
+                                                           'hidden_owner': '0',
+                                                           'holder_count': '1',
+                                                           'holders': [{'address': '0xF9e5F008cB71d51069C27b2e26dd5AFbc1498A87',
+                                                                        'balance': '100000000',
+                                                                        'is_contract': 0,
+                                                                        'is_locked': 0,
+                                                                        'locked_detail': None,
+                                                                        'percent': '1.000000',
+                                                                        'tag': ''}],
+                                                           'honeypot_with_same_creator': '0',
+                                                           'is_airdrop_scam': None,
+                                                           'is_anti_whale': '1',
+                                                           'is_blacklisted': '1',
+                                                           'is_honeypot': '0',
+                                                           'is_in_dex': '1',
+                                                           'is_mintable': '0',
+                                                           'is_open_source': '1',
+                                                           'is_proxy': '0',
+                                                           'is_true_token': None,
+                                                           'is_whitelisted': '1',
+                                                           'lp_holder_count': None,
+                                                           'lp_holders': None,
+                                                           'lp_total_supply': None,
+                                                           'note': None,
+                                                           'other_potential_risks': None,
+                                                           'owner_address': '0xf9e5f008cb71d51069c27b2e26dd5afbc1498a87',
+                                                           'owner_balance': '100000000',
+                                                           'owner_change_balance': '0',
+                                                           'owner_percent': '1.000000',
+                                                           'personal_slippage_modifiable': '0',
+                                                           'selfdestruct': '0',
+                                                           'sell_tax': '',
+                                                           'slippage_modifiable': '1',
+                                                           'token_name': 'TestTest',
+                                                           'token_symbol': 'TTST',
+                                                           'total_supply': '100000000',
+                                                           'trading_cooldown': '1',
+                                                           'transfer_pausable': '0',
+                                                           'trust_list': None}}}
+
+
+UniV3
+
+Pair: WETH/Choc
+Created at: 2024-04-06 16:11:15
+Liquidity: 8633454041648181805056.00
+Warning: Token1 address 0xbb3d9dab45c71fee98a931d0a6646045aaa59807 is not verifiable
+
+
+UniV3
+
+Pair: WETH/CPN
+Created at: 2024-04-06 16:10:29
+Liquidity: 10013006598007629824.00
+Warning: Token1 address 0x9665e09b6d82c20cd76ac597d84ce4e98e2cfe98 is not verifiable
+
+
+New pair created on UniV2: 0x15C040A49115B19a8324a86D8AA1BE625d800D3d/0x4200000000000000000000000000000000000006, pair address: 0x3E91213db83ED61E8D8b34988B121bba49669E9F
+Token0 security data: {'code': 1,
+ 'message': 'OK',
+ 'result': {'0x15c040a49115b19a8324a86d8aa1be625d800d3d': {'anti_whale_modifiable': '0',
+                                                           'buy_tax': '',
+                                                           'can_take_back_ownership': '0',
+                                                           'cannot_buy': '0',
+                                                           'cannot_sell_all': None,
+                                                           'creator_address': '0x7163D989196DdC74C8d76E6a77A72cD9D09D0Eb1',
+                                                           'creator_balance': '1000000000000',
+                                                           'creator_percent': '1.000000',
+                                                           'dex': None,
+                                                           'external_call': '0',
+                                                           'fake_token': None,
+                                                           'hidden_owner': '0',
+                                                           'holder_count': None,
+                                                           'holders': None,
+                                                           'honeypot_with_same_creator': '0',
+                                                           'is_airdrop_scam': None,
+                                                           'is_anti_whale': '0',
+                                                           'is_blacklisted': '0',
+                                                           'is_honeypot': '0',
+                                                           'is_in_dex': '0',
+                                                           'is_mintable': '0',
+                                                           'is_open_source': '1',
+                                                           'is_proxy': '0',
+                                                           'is_true_token': None,
+                                                           'is_whitelisted': '0',
+                                                           'lp_holder_count': None,
+                                                           'lp_holders': None,
+                                                           'lp_total_supply': None,
+                                                           'note': None,
+                                                           'other_potential_risks': None,
+                                                           'owner_address': '0x7163d989196ddc74c8d76e6a77a72cd9d09d0eb1',
+                                                           'owner_balance': '1000000000000',
+                                                           'owner_change_balance': '0',
+                                                           'owner_percent': '1.000000',
+                                                           'personal_slippage_modifiable': '0',
+                                                           'selfdestruct': '0',
+                                                           'sell_tax': '',
+                                                           'slippage_modifiable': '0',
+                                                           'token_name': ' '
+                                                                         'JAR ',
+                                                           'token_symbol': ' '
+                                                                           'JAR ',
+                                                           'total_supply': None,
+                                                           'trading_cooldown': '0',
+                                                           'transfer_pausable': '0',
+                                                           'trust_list': None}}}
+
+
+New pair created on UniV2: 0x4200000000000000000000000000000000000006/0x8CFeAe813547e291FF5559568B16AE254A73D558, pair address: 0x22C92d682c679E18bd8f0F1a5B7961eba95599c5
+Token1 security data: {'code': 1, 'message': 'OK', 'result': {}}
+
+
+New pair created on UniV2: 0x15C040A49115B19a8324a86D8AA1BE625d800D3d/0x4200000000000000000000000000000000000006, pair address: 0x3E91213db83ED61E8D8b34988B121bba49669E9F
+Token0 security data: {'code': 1,
+ 'message': 'OK',
+ 'result': {'0x15c040a49115b19a8324a86d8aa1be625d800d3d': {'anti_whale_modifiable': '0',
+                                                           'buy_tax': '',
+                                                           'can_take_back_ownership': '0',
+                                                           'cannot_buy': '0',
+                                                           'cannot_sell_all': None,
+                                                           'creator_address': '0x7163D989196DdC74C8d76E6a77A72cD9D09D0Eb1',
+                                                           'creator_balance': '1000000000000',
+                                                           'creator_percent': '1.000000',
+                                                           'dex': None,
+                                                           'external_call': '0',
+                                                           'fake_token': None,
+                                                           'hidden_owner': '0',
+                                                           'holder_count': None,
+                                                           'holders': None,
+                                                           'honeypot_with_same_creator': '0',
+                                                           'is_airdrop_scam': None,
+                                                           'is_anti_whale': '0',
+                                                           'is_blacklisted': '0',
+                                                           'is_honeypot': '0',
+                                                           'is_in_dex': '0',
+                                                           'is_mintable': '0',
+                                                           'is_open_source': '1',
+                                                           'is_proxy': '0',
+                                                           'is_true_token': None,
+                                                           'is_whitelisted': '0',
+                                                           'lp_holder_count': None,
+                                                           'lp_holders': None,
+                                                           'lp_total_supply': None,
+                                                           'note': None,
+                                                           'other_potential_risks': None,
+                                                           'owner_address': '0x7163d989196ddc74c8d76e6a77a72cd9d09d0eb1',
+                                                           'owner_balance': '1000000000000',
+                                                           'owner_change_balance': '0',
+                                                           'owner_percent': '1.000000',
+                                                           'personal_slippage_modifiable': '0',
+                                                           'selfdestruct': '0',
+                                                           'sell_tax': '',
+                                                           'slippage_modifiable': '0',
+                                                           'token_name': ' '
+                                                                         'JAR ',
+                                                           'token_symbol': ' '
+                                                                           'JAR ',
+                                                           'total_supply': None,
+                                                           'trading_cooldown': '0',
+                                                           'transfer_pausable': '0',
+                                                           'trust_list': None}}}
+
+
+New pair created on UniV2: 0x4200000000000000000000000000000000000006/0x8CFeAe813547e291FF5559568B16AE254A73D558, pair address: 0x22C92d682c679E18bd8f0F1a5B7961eba95599c5
+Token1 security data: {'code': 1, 'message': 'OK', 'result': {}}
+
+
+New pair created on UniV2: 0x4200000000000000000000000000000000000006/0x632b14497f8DC85e149293687D5f2A3725cAA31E, pair address: 0x3a112633C8E2d6ef7cc4651b18Bb213e5A6F8B2E
+Token1 security data: {'code': 1,
+ 'message': 'OK',
+ 'result': {'0x632b14497f8dc85e149293687d5f2a3725caa31e': {'anti_whale_modifiable': '0',
+                                                           'buy_tax': '',
+                                                           'can_take_back_ownership': '0',
+                                                           'cannot_buy': '0',
+                                                           'cannot_sell_all': None,
+                                                           'creator_address': '0xC80e7e36b6Dcec4D8ab432bb6c41aB02105bbE45',
+                                                           'creator_balance': '1000000000000',
+                                                           'creator_percent': '1.000000',
+                                                           'dex': None,
+                                                           'external_call': '0',
+                                                           'fake_token': None,
+                                                           'hidden_owner': '0',
+                                                           'holder_count': None,
+                                                           'holders': None,
+                                                           'honeypot_with_same_creator': '0',
+                                                           'is_airdrop_scam': None,
+                                                           'is_anti_whale': '0',
+                                                           'is_blacklisted': '0',
+                                                           'is_honeypot': '0',
+                                                           'is_in_dex': '0',
+                                                           'is_mintable': '0',
+                                                           'is_open_source': '1',
+                                                           'is_proxy': '0',
+                                                           'is_true_token': None,
+                                                           'is_whitelisted': '0',
+                                                           'lp_holder_count': None,
+                                                           'lp_holders': None,
+                                                           'lp_total_supply': None,
+                                                           'note': None,
+                                                           'other_potential_risks': None,
+                                                           'owner_address': '0xc80e7e36b6dcec4d8ab432bb6c41ab02105bbe45',
+                                                           'owner_balance': '1000000000000',
+                                                           'owner_change_balance': '0',
+                                                           'owner_percent': '1.000000',
+                                                           'personal_slippage_modifiable': '0',
+                                                           'selfdestruct': '0',
+                                                           'sell_tax': '',
+                                                           'slippage_modifiable': '0',
+                                                           'token_name': ' '
+                                                                         'ION ',
+                                                           'token_symbol': ' '
+                                                                           'ION ',
+                                                           'total_supply': None,
+                                                           'trading_cooldown': '0',
+                                                           'transfer_pausable': '0',
+                                                           'trust_list': None}}}
+
+
+New pair created on UniV2: 0x4200000000000000000000000000000000000006/0x632b14497f8DC85e149293687D5f2A3725cAA31E, pair address: 0x3a112633C8E2d6ef7cc4651b18Bb213e5A6F8B2E
+Token1 security data: {'code': 1,
+ 'message': 'OK',
+ 'result': {'0x632b14497f8dc85e149293687d5f2a3725caa31e': {'anti_whale_modifiable': '0',
+                                                           'buy_tax': '',
+                                                           'can_take_back_ownership': '0',
+                                                           'cannot_buy': '0',
+                                                           'cannot_sell_all': None,
+                                                           'creator_address': '0xC80e7e36b6Dcec4D8ab432bb6c41aB02105bbE45',
+                                                           'creator_balance': '1000000000000',
+                                                           'creator_percent': '1.000000',
+                                                           'dex': None,
+                                                           'external_call': '0',
+                                                           'fake_token': None,
+                                                           'hidden_owner': '0',
+                                                           'holder_count': None,
+                                                           'holders': None,
+                                                           'honeypot_with_same_creator': '0',
+                                                           'is_airdrop_scam': None,
+                                                           'is_anti_whale': '0',
+                                                           'is_blacklisted': '0',
+                                                           'is_honeypot': '0',
+                                                           'is_in_dex': '0',
+                                                           'is_mintable': '0',
+                                                           'is_open_source': '1',
+                                                           'is_proxy': '0',
+                                                           'is_true_token': None,
+                                                           'is_whitelisted': '0',
+                                                           'lp_holder_count': None,
+                                                           'lp_holders': None,
+                                                           'lp_total_supply': None,
+                                                           'note': None,
+                                                           'other_potential_risks': None,
+                                                           'owner_address': '0xc80e7e36b6dcec4d8ab432bb6c41ab02105bbe45',
+                                                           'owner_balance': '1000000000000',
+                                                           'owner_change_balance': '0',
+                                                           'owner_percent': '1.000000',
+                                                           'personal_slippage_modifiable': '0',
+                                                           'selfdestruct': '0',
+                                                           'sell_tax': '',
+                                                           'slippage_modifiable': '0',
+                                                           'token_name': ' '
+                                                                         'ION ',
+                                                           'token_symbol': ' '
+                                                                           'ION ',
+                                                           'total_supply': None,
+                                                           'trading_cooldown': '0',
+                                                           'transfer_pausable': '0',
+                                                           'trust_list': None}}}
+
+
+New pair created on UniV2: 0x1c3575392a2C287d51b5F8ADa381990bd914955a/0x4200000000000000000000000000000000000006, pair address: 0xF00E181fa8B2f3d3f7cfB2512D70C31a7872575A
+Token0 security data: {'code': 1, 'message': 'OK', 'result': {}}
+
+
+New pair created on UniV2: 0x1c3575392a2C287d51b5F8ADa381990bd914955a/0x4200000000000000000000000000000000000006, pair address: 0xF00E181fa8B2f3d3f7cfB2512D70C31a7872575A
+Token0 security data: {'code': 1, 'message': 'OK', 'result': {}}
+
+

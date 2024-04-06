@@ -36,23 +36,30 @@ class Recon:
 
             print(f"New pair created on UniV2: {token0}/{token1}, pair address: {pair}")
             # 0x4200000000000000000000000000000000000006 ignore weth in the pair for security check
-            if token0 != "0x4200000000000000000000000000000000000006":
-                token0_security_data = Token().token_security(
-                    chain_id="8453", addresses=[token0]
-                )
-                print(f"Token0 security data: {token0_security_data}\n\n")
+            non_weth_token = (
+                token0
+                if token0 != "0x4200000000000000000000000000000000000006"
+                else token1
+            )
+            token_security_data = Token().token_security(
+                chain_id="8453", addresses=[non_weth_token]
+            )
+            print(f"Token security data: {token_security_data}\n\n")
+            security = token_security_data.to_dict()
+            if (
+                non_weth_token in security["result"]
+                and security["result"][non_weth_token]["is_open_source"] == "1"
+            ):
+                pair_data = self.screener(chain_id="base", pair_address=pair)
+                print(json.dumps(pair_data, indent=4))
+                if pair_data and pair_data["pair"]["liquidity"]["usd"] > 20000:
+                    print("PREPARE TO BUY")
 
-            if token1 != "0x4200000000000000000000000000000000000006":
-                token1_security_data = Token().token_security(
-                    chain_id="8453", addresses=[token1]
-                )
-                print(f"Token1 security data: {token1_security_data}\n\n")
-
-    def screener(self,chain_id: str, pair_address: str):
+    def screener(self, chain_id: str, pair_address: str):
         """
         Perform an API call to Dexscreener and retrieve information about a specific pair.
         """
-        url= f"https://api.dexscreener.com/latest/dex/pairs/{chain_id}/{pair_address}"
+        url = f"https://api.dexscreener.com/latest/dex/pairs/{chain_id}/{pair_address}"
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
@@ -62,16 +69,14 @@ class Recon:
             print(f"Error fetching data: {e}")
             return None
 
-
-
     # contract.events.PairCreated.get_logs(fromBlock=latest_block)
     # @property properties i might use for the Recon class
     # @cached_property for caching for repetitive calls ATT: if prop changed it will not be updated
     # @lru_cache for function calls
 
-    def run(self) -> None:
+    def run(self, iterations: int = 30) -> None:
         """Run function to continuously monitor for new pairs"""
-        while True:
+        for _ in range(iterations):
             self.get_new_pairs()
 
 
