@@ -47,7 +47,28 @@ class Recon:
 
             pairs.append({"token0": token0, "token1": token1, "pair": pair})
 
-        return print(pairs)
+        return pairs
+
+    def parse_pairs(self, pairs: List[Dict[str, str]]) -> List[str]:
+        """Check which token is not WETH and return the list of them for security check."""
+        non_weth_tokens = []
+        weth_address = "0x4200000000000000000000000000000000000006"
+
+        for pair in pairs:
+            if pair["token0"] != weth_address:
+                non_weth_tokens.append(pair["token0"])
+            elif pair["token1"] != weth_address:
+                non_weth_tokens.append(pair["token1"])
+
+        return non_weth_tokens
+
+    def check_security(self, pairs: List[str]):
+        """Check the security properties of a list of pairs."""
+        for pair in pairs:
+            pair_security_data = Token().token_security(
+                chain_id="8453", addresses=[pair]
+            )
+            print(pair_security_data)
 
     def get_new_pairs(self) -> None:
         """Logic to get new pairs from event logs in the factory contract"""
@@ -109,7 +130,9 @@ def main():
     """Main function to run the bot."""
     recon = Recon(factory_address)
     # recon.run()
-    recon.get_last_pairs()
+    pairs = recon.get_last_pairs()
+    non_weth_pairs = recon.parse_pairs(pairs)
+    recon.check_security(non_weth_pairs)
 
 
 if __name__ == "__main__":
