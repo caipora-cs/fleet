@@ -1,9 +1,10 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=invalid-name
 import json
-import requests
+from typing import Dict, List
 from web3 import Web3
 from goplus.token import Token
+import requests
 
 # Uniswap factory address
 factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
@@ -23,6 +24,30 @@ class Recon:
         with open("abis/uniswapV2abi.json", encoding="utf-8") as f:
             abi = json.load(f)
         self.contract = self.web3.eth.contract(address=factory, abi=abi)
+
+    def get_last_pairs(self, how_many: int = 10) -> List[Dict[str, str]]:
+        """Get the last pairs created on the factory contract."""
+        latest_block = self.web3.eth.block_number
+        start_block = max(0, latest_block - 500)
+        events = []
+
+        while len(events) < how_many and start_block >= 0:
+            new_events = self.contract.events.PairCreated.get_logs(
+                fromBlock=start_block, toBlock=min(start_block + 500, latest_block)
+            )
+            events.extend(new_events)
+            start_block -= 500
+
+        last_events = events[-how_many:]
+        pairs = []
+        for event in last_events:
+            token0 = event["args"]["token0"]
+            token1 = event["args"]["token1"]
+            pair = event["args"]["pair"]
+
+            pairs.append({"token0": token0, "token1": token1, "pair": pair})
+
+        return print(pairs)
 
     def get_new_pairs(self) -> None:
         """Logic to get new pairs from event logs in the factory contract"""
@@ -83,7 +108,8 @@ class Recon:
 def main():
     """Main function to run the bot."""
     recon = Recon(factory_address)
-    recon.run()
+    # recon.run()
+    recon.get_last_pairs()
 
 
 if __name__ == "__main__":
