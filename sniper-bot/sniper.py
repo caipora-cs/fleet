@@ -5,6 +5,7 @@ import time
 import datetime
 import os
 import requests
+import pprint
 from goplus.token import Token
 from dotenv import load_dotenv
 from recon import Recon
@@ -73,6 +74,7 @@ def main():
     """Main function."""
     sniper = Sniper(SCAN_API_URL, SCAN_API_KEY)
     recon = Recon(FACTORY_ADDRESS)
+    pp = pprint.PrettyPrinter(indent=4)
     while True:
         try:
             data_univ3 = sniper.query_data(query)
@@ -107,27 +109,27 @@ def main():
                         print(f"Token1 security data: {token1_security_data}\n\n")
                         security = token1_security_data.to_dict()
                         if token1_address in security["result"]:
-                            dex_list = security["result"][token1_address]["dex"]
-                            if dex_list is not None:
-                                for dex in dex_list:
-                                    pair_address = dex["pair"]
-                                    pair_data = recon.screener(
-                                        chain_id="base", pair_address=pair_address
-                                    )
-                                    print(json.dumps(pair_data, indent=4))
-                                    if (
-                                        pair_data
-                                        and pair_data["pair"]
-                                        and pair_data["pair"]["liquidity"]
-                                        and pair_data["pair"]["liquidity"]["usd"]
-                                        > 20000
-                                    ):
-                                        print("PREPARE TO BUY")
+                            pair_data = recon.screener_by_token(token1_address)
+                            print(json.dumps(pair_data, indent=4))
+                            if pair_data and pair_data["pairs"]:
+                                if pair_data["pairs"][0]["liquidity"]["usd"] > 20000:
+                                    print("PREPARE TO BUY")
 
         except requests.exceptions.RequestException as error:
             print(f"Error: Unexpected response: {error}")
+
         print("Starting Univ2 Recon...\n")
-        recon.run(iterations=200)
+        pairs = recon.get_last_pairs(30)
+        parsed_pairs = recon.parse_pairs(pairs)
+        security_check = recon.check_security(parsed_pairs)
+        oss_pairs = recon.get_open_source(security_check)
+        for token in oss_pairs:
+            token_address = list(token["result"].keys())[0]
+            token_data = recon.screener_by_token(token_address)
+            pp.pprint(token_data)
+            if token_data and token_data["pairs"]:
+                if token_data["pairs"][0]["liquidity"]["usd"] > 20000:
+                    print("PREPARE TO BUY")
         time.sleep(30)
 
 

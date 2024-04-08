@@ -5,6 +5,7 @@ from typing import Dict, List
 from web3 import Web3
 from goplus.token import Token
 import requests
+import pprint
 
 # Uniswap factory address
 factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
@@ -62,13 +63,15 @@ class Recon:
 
         return non_weth_tokens
 
-    def check_security(self, pairs: List[str]):
+    def check_security(self, pairs: List[str]) -> List[Dict]:
         """Check the security properties of a list of pairs."""
+        security_data_objects = []
         for pair in pairs:
             pair_security_data = Token().token_security(
                 chain_id="8453", addresses=[pair]
             )
-            print(pair_security_data)
+            security_data_objects.append(pair_security_data)
+        return security_data_objects
 
     def get_new_pairs(self) -> None:
         """Logic to get new pairs from event logs in the factory contract"""
@@ -101,11 +104,36 @@ class Recon:
                 if pair_data and pair_data["pair"]["liquidity"]["usd"] > 20000:
                     print("PREPARE TO BUY")
 
-    def screener(self, chain_id: str, pair_address: str):
+    def get_open_source(self, security_data_objects: List[Dict]) -> List[Dict]:
+        """Get the open source objects from the security data objects."""
+        open_source_objects = []
+        for data in security_data_objects:
+            data_dict = data.to_dict()
+            if data_dict["result"]:  # if the result is not empty
+                token_address = list(data_dict["result"].keys())[0]
+                if data_dict["result"][token_address]["is_open_source"] == "1":
+                    open_source_objects.append(data_dict)
+        return open_source_objects
+
+    def screener_by_pair(self, chain_id: str, pair_address: str) -> json:
         """
         Perform an API call to Dexscreener and retrieve information about a specific pair.
         """
         url = f"https://api.dexscreener.com/latest/dex/pairs/{chain_id}/{pair_address}"
+        try:
+            response = requests.get(url, timeout=10)
+            response.raise_for_status()
+            data = response.json()
+            return data
+        except requests.RequestException as e:
+            print(f"Error fetching data: {e}")
+            return None
+
+    def screener_by_token(self, token_addreses: str) -> json:
+        """
+        Perform an API call to Dexscreener and retrieve information about a specific pair.
+        """
+        url = f"https://api.dexscreener.com/latest/dex/tokens/{token_addreses}"
         try:
             response = requests.get(url, timeout=10)
             response.raise_for_status()
@@ -129,10 +157,27 @@ class Recon:
 def main():
     """Main function to run the bot."""
     recon = Recon(factory_address)
+    pp = pprint.PrettyPrinter(indent=4)
     # recon.run()
     pairs = recon.get_last_pairs()
+    print("All last pairs:")
+    pp.pprint(pairs)
     non_weth_pairs = recon.parse_pairs(pairs)
-    recon.check_security(non_weth_pairs)
+    print("All Non WETH pairs:")
+    pp.pprint(non_weth_pairs)
+    security_data_objects = recon.check_security(non_weth_pairs)
+    # print("All security data:")
+    # pp.pprint(security_data_objects)
+    open_source_objects = recon.get_open_source(security_data_objects)
+    print("All open source objects:")
+    pp.pprint(open_source_objects)
+    for token in open_source_objects:
+        token_address = list(token["result"].keys())[0]
+        token_data = recon.screener_by_token(token_address)
+        pp.pprint(token_data)
+        if token_data and token_data["pairs"]:
+            if token_data["pairs"][0]["liquidity"]["usd"] > 20000:
+                print("PREPARE TO BUY")
 
 
 if __name__ == "__main__":
