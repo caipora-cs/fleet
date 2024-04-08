@@ -117,7 +117,7 @@ def main():
 
         except requests.exceptions.RequestException as error:
             print(f"Error: Unexpected response: {error}")
-
+            
         print("Starting Univ2 Recon...\n")
         pairs = recon.get_last_pairs(30)
         parsed_pairs = recon.parse_pairs(pairs)

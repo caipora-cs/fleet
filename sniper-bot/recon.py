@@ -1,11 +1,12 @@
 # pylint: disable=missing-module-docstring
 # pylint: disable=invalid-name
+import requests
 import json
+import pprint
+from datetime import datetime, timedelta
 from typing import Dict, List
 from web3 import Web3
 from goplus.token import Token
-import requests
-import pprint
 
 # Uniswap factory address
 factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
@@ -176,6 +177,15 @@ def main():
         token_data = recon.screener_by_token(token_address)
         pp.pprint(token_data)
         if token_data and token_data["pairs"]:
+            timestamp_ms_to_s = token_data["pairs"][0]["pairCreatedAt"] / 1000.0
+            dt_object = datetime.fromtimestamp(timestamp_ms_to_s)
+            now = datetime.now()
+            diff = now - dt_object
+            print(f"Pair created at: {dt_object}")
+            if diff < timedelta(minutes=5):
+                print("Pair created less than 5 minutes ago")
+            else:
+                print("Pair created more than 5 minutes ago")
             if token_data["pairs"][0]["liquidity"]["usd"] > 20000:
                 print("PREPARE TO BUY")
 
