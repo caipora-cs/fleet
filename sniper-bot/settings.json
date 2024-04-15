@@ -1,0 +1,9 @@
+{
+    "YOUR_ADDRESS": "",
+    "YOUR_PRIVATE_KEY": "",
+    "GWEI_GAS": 8,
+    "MAX_FEE_ETH": 0.01,
+    "SLIPPAGE": 10,
+    "MIN_LIQUIDITY_USD": 20000,
+    "RPC_ENDPOINT": "https://api.developer.coinbase.com/rpc/v1/base/K6JT5NIkXJ7yyIh6Mtgxt6WJACLrPaN8"
+}

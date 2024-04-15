@@ -5,8 +5,8 @@ import json
 import pprint
 from datetime import datetime, timedelta
 from typing import Dict, List
-from web3 import Web3
 from goplus.token import Token
+from txns import connect as rpc
 
 # Uniswap factory address
 factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
@@ -18,18 +18,14 @@ class Recon:
     def __init__(self, factory: str) -> None:
         self.factory = factory
         # Your RPC link connection
-        self.web3 = Web3(
-            Web3.HTTPProvider(
-                "https://api.developer.coinbase.com/rpc/v1/base/K6JT5NIkXJ7yyIh6Mtgxt6WJACLrPaN8"
-            )
-        )
+        self.w3 = rpc()
         with open("abis/uniswapV2abi.json", encoding="utf-8") as f:
             abi = json.load(f)
-        self.contract = self.web3.eth.contract(address=factory, abi=abi)
+        self.contract = self.w3.eth.contract(address=factory, abi=abi)
 
     def get_last_pairs(self, how_many: int = 10) -> List[Dict[str, str]]:
         """Get the last pairs created on the factory contract."""
-        latest_block = self.web3.eth.block_number
+        latest_block = self.w3.eth.block_number
         start_block = max(0, latest_block - 500)
         events = []
 
@@ -76,7 +72,7 @@ class Recon:
 
     def get_new_pairs(self) -> None:
         """Logic to get new pairs from event logs in the factory contract"""
-        latest_block = self.web3.eth.block_number
+        latest_block = self.w3.eth.block_number
         new_pairs = self.contract.events.PairCreated.get_logs(fromBlock=latest_block)
 
         for event in new_pairs:
