@@ -1,6 +1,13 @@
 import json
 import requests
+import style
 from web3 import Web3
+from recon import factory_address, factory_abi
+
+# Uniswap router address and its respective ABI
+router_address = "0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24"
+with open("abis/unirouterV2abi.json", encoding="utf-8") as f:
+    router_abi = json.load(f)
 
 
 def connect():
@@ -32,12 +39,94 @@ class Transaction:
     """Class to handle transactions. Functions to buy and sell tokens based on signals."""
 
     def __init__(self, token_address: EthereumAddress, quantity: int = 0) -> None:
+        with open("settings.json") as f:
+            keys = json.load(f)
+        self.w3 = connect()
         # Wallet or Contract address
-        self.address, self.private_key = self.setup_address()
+        self.factory = self.w3.eth.contract(
+            address=EthereumAddress(factory_address), abi=factory_abi
+        )
+        self.router = self.w3.eth.contract(
+            address=EthereumAddress(router_address), abi=router_abi
+        )
         # Token to buy or sell, already checksummed
+        self.token_exchange_address = self.factory.functions.get_exchange(
+            token_address
+        ).call()
+        # Config
         self.token_address = token_address
         self.quantity = quantity
+        # Setup logic
+        self.address, self.private_key = self.setup_address()
         self.token_contract = self.setup_token_contract()
-        self.slippage = self.setup_slippage()
         self.max_gas, self.gas_price = self.setup_gas()
-        self.w3 = self.connect()
+        self.timeout = keys["timeout"]
+        self.safegas = keys["savegascost"]
+        self.slippage = keys["slippage"]
+
+    # Methods
+    def setup_gas(self):
+        """Set up the gas price and a max gas you are willing to accept."""
+        with open("settings.json", encoding="utf-8") as f:
+            keys = json.load(f)
+        return keys["max_fee_eth"], int(keys["gwei_gas"] * (10**9))
+
+    def setup_address(self):
+        """Does check validation of the address and private key."""
+        with open("settings.json", encoding="utf-8") as f:
+            keys = json.load(f)
+        if len(keys["YOUR_ADDRESS"]) <= 41:
+            print(
+                style.RED
+                + "Please set your address in the settings.json file."
+                + style.RESET
+            )
+            raise ValueError("Address not set in settings.json") and SystemExit
+        if len(keys["YOUR_PRIVATE_KEY"]) <= 42:
+            print(
+                style.RED
+                + "Please set your private key in the settings.json file."
+                + style.RESET
+            )
+            raise ValueError("Private key not set in settings.json") and SystemExit
+        return keys["YOUR_ADDRESS"], keys["YOUR_PRIVATE_KEY"]
+
+    def get_token_decimals(self):
+        """Get the token decimals."""
+        return self.token_contract.functions.decimals().call()
+
+    def get_token_name(self):
+        """Get the token name."""
+        return self.token_contract.functions.name().call()
+
+    def get_token_symbol(self):
+        """Get the token symbol."""
+        return self.token_contract.functions.symbol().call()
+
+    def get_block_high(self):
+        """Get the latest block number."""
+        return self.w3.eth.block_number
+
+    def estimateGas(self, txn):
+        """Estimate the gas for a transaction."""
+        gas = self.w3.eth.estimate_gas(
+            {
+                "from": txn["from"],
+                "to": txn["to"],
+                "value": txn["value"],
+                "data": txn["data"],
+            }
+        )
+        gas = gas + (gas / 10)  # Adding 1/10 from gas to gas!
+        max_gas_eth = Web3.from_wei(gas * self.gas_price, "ether")
+        print(
+            style.GREEN
+            + "\nMax Transaction cost "
+            + str(max_gas_eth)
+            + "ETH"
+            + style.RESET
+        )
+        if max_gas_eth > self.max_gas:
+            print(style.RED + "\nTx cost exceeds your settings, exiting!")
+            raise SystemExit # Find better exception to raise
+        return gas

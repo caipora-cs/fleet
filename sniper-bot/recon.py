@@ -8,8 +8,10 @@ from typing import Dict, List
 from goplus.token import Token
 from txns import connect as rpc
 
-# Uniswap factory address
+# Uniswap factory address and its respective ABI
 factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
+with open("abis/uniswapV2abi.json", encoding="utf-8") as f:
+    factory_abi = json.load(f)
 
 
 class Recon:
@@ -19,9 +21,7 @@ class Recon:
         self.factory = factory
         # Your RPC link connection
         self.w3 = rpc()
-        with open("abis/uniswapV2abi.json", encoding="utf-8") as f:
-            abi = json.load(f)
-        self.contract = self.w3.eth.contract(address=factory, abi=abi)
+        self.contract = self.w3.eth.contract(address=factory, abi=factory_abi)
 
     def get_last_pairs(self, how_many: int = 10) -> List[Dict[str, str]]:
         """Get the last pairs created on the factory contract."""
