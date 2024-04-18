@@ -3,6 +3,7 @@ import requests
 import style
 import time
 from web3 import Web3
+from web3.exceptions import TimeExhausted, TransactionNotFound
 from recon import factory_address, factory_abi
 
 # Uniswap router address and its respective ABI
@@ -182,7 +183,7 @@ class Transaction:
                 ).build_transaction(
                     {
                         "from": self.address,
-                        "value": self.w3.toWei(int(self.quantity), "ether"),
+                        "value": self.w3.to_wei(int(self.quantity), "ether"),
                         "gasPrice": self.gas_price,
                         "nonce": self.w3.eth.get_transaction_count(self.address),
                     }
@@ -201,8 +202,21 @@ class Transaction:
                     )
                 else:
                     return False, print(style.RED + "Transaction failed!" + style.RESET)
-            except Exception as e:
-                print(e)
+
+            except ValueError as e:
+                print(style.RED + "Value Error: " + str(e) + style.RESET)
+                break
+
+            except TransactionNotFound as e:
+                print(style.RED + "Transaction not found: " + str(e) + style.RESET)
                 trys -= 1
-                print(style.RED + "Transaction failed, retrying..." + style.RESET)
-                time.sleep(1)
+
+            except TimeExhausted as e:
+                print(style.RED + "Transaction timed out: " + str(e) + style.RESET)
+                trys -= 1
+
+            except Exception as e:
+                print(style.RED + "Unexpected error:" + str(e) + style.RESET)
+                trys -= 1
+
+            time.sleep(1)
