@@ -6,13 +6,12 @@ from recon import factory_address, factory_abi
 
 # Uniswap router address and its respective ABI
 router_address = "0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24"
-with open("abis/unirouterV2abi.json", encoding="utf-8") as f:
+with open("abis/unirouterV2.abi.json", encoding="utf-8") as f:
     router_abi = json.load(f)
-
 
 def connect():
     """Connnect to a WebSocket or HTTP RPC endpoint to the blockchain."""
-    with open("settings.json") as f:
+    with open("settings.json", encoding = "utf-8") as f:
         keys = json.load(f)
     if keys["RPC_ENDPOINT"][:2].lower() == "ws":
         w3 = Web3(Web3.WebsocketProvider(keys["RPC_ENDPOINT"]))
@@ -65,6 +64,15 @@ class Transaction:
         self.slippage = keys["slippage"]
 
     # Methods
+    def setup_token_contract(self):
+        """Set up the token contract."""
+        with open("abis/erc20.abi.json", encoding="utf-8") as f:
+            erc20_abi = json.load(f)
+        token_contract = self.w3.eth.contract(
+            address=self.token_address, abi=erc20_abi
+        )
+        return token_contract
+
     def setup_gas(self):
         """Set up the gas price and a max gas you are willing to accept."""
         with open("settings.json", encoding="utf-8") as f:
@@ -102,6 +110,9 @@ class Transaction:
     def get_token_symbol(self):
         """Get the token symbol."""
         return self.token_contract.functions.symbol().call()
+    
+    def get_token_balance(self):
+        return self.token_contract.functions.balance_of(self.address).call()
 
     def get_block_high(self):
         """Get the latest block number."""
@@ -130,3 +141,15 @@ class Transaction:
             print(style.RED + "\nTx cost exceeds your settings, exiting!")
             raise SystemExit # Find better exception to raise
         return gas
+
+    #Funcao para dar retrieve da liquidity da wallet e do token
+   
+    def get_output_token_to_eth(self, percent:int = 100):
+        """Get the amount of token to be sold."""
+        token_balance = int(self.token_contract.functions.balance_of(self.address).call())
+        if token_balance > 0:
+            amount_for_input = int((token_balance/100)*percent)
+            if percent == 100:
+                amount_for_input = token_balance
+        return amount_for_input
+    

@@ -10,7 +10,7 @@ from txns import connect as rpc
 
 # Uniswap factory address and its respective ABI
 factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
-with open("abis/uniswapV2abi.json", encoding="utf-8") as f:
+with open("abis/uniswapV2.abi.json", encoding="utf-8") as f:
     factory_abi = json.load(f)
 
 
