@@ -1,17 +1,20 @@
 import json
 import requests
 import style
+import time
 from web3 import Web3
 from recon import factory_address, factory_abi
 
 # Uniswap router address and its respective ABI
+weth_address = "0x4200000000000000000000000000000000000006"
 router_address = "0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24"
 with open("abis/unirouterV2.abi.json", encoding="utf-8") as f:
     router_abi = json.load(f)
 
+
 def connect():
     """Connnect to a WebSocket or HTTP RPC endpoint to the blockchain."""
-    with open("settings.json", encoding = "utf-8") as f:
+    with open("settings.json", encoding="utf-8") as f:
         keys = json.load(f)
     if keys["RPC_ENDPOINT"][:2].lower() == "ws":
         w3 = Web3(Web3.WebsocketProvider(keys["RPC_ENDPOINT"]))
@@ -68,9 +71,7 @@ class Transaction:
         """Set up the token contract."""
         with open("abis/erc20.abi.json", encoding="utf-8") as f:
             erc20_abi = json.load(f)
-        token_contract = self.w3.eth.contract(
-            address=self.token_address, abi=erc20_abi
-        )
+        token_contract = self.w3.eth.contract(address=self.token_address, abi=erc20_abi)
         return token_contract
 
     def setup_gas(self):
@@ -110,7 +111,7 @@ class Transaction:
     def get_token_symbol(self):
         """Get the token symbol."""
         return self.token_contract.functions.symbol().call()
-    
+
     def get_token_balance(self):
         return self.token_contract.functions.balance_of(self.address).call()
 
@@ -118,7 +119,7 @@ class Transaction:
         """Get the latest block number."""
         return self.w3.eth.block_number
 
-    def estimateGas(self, txn):
+    def estimate_gas(self, txn):
         """Estimate the gas for a transaction."""
         gas = self.w3.eth.estimate_gas(
             {
@@ -139,17 +140,69 @@ class Transaction:
         )
         if max_gas_eth > self.max_gas:
             print(style.RED + "\nTx cost exceeds your settings, exiting!")
-            raise SystemExit # Find better exception to raise
+            raise SystemExit  # Find better exception to raise
         return gas
 
-    #Funcao para dar retrieve da liquidity da wallet e do token
-   
-    def get_output_token_to_eth(self, percent:int = 100):
+    # Funcao para dar retrieve da liquidity da wallet e do token
+
+    def get_output_token_to_eth(self, percent: int = 100):
         """Get the amount of token to be sold."""
-        token_balance = int(self.token_contract.functions.balance_of(self.address).call())
+        token_balance = int(
+            self.token_contract.functions.balance_of(self.address).call()
+        )
         if token_balance > 0:
-            amount_for_input = int((token_balance/100)*percent)
+            amount_for_input = int((token_balance / 100) * percent)
             if percent == 100:
                 amount_for_input = token_balance
         return amount_for_input
-    
+
+    # Buy Logic
+    def buy_token(self, retry: int = 1):
+        """Buy tokens with a given amount of ETH. Retry if the transaction fails. cheap or fast"""
+        if self.safegas != True:
+            return self.buy_token_fast(retry)
+        else:
+            return self.buy_token_cheap(retry)
+
+    def buy_token_fast(self, trys):
+        while trys:
+            try:
+                # Get the Uniswap router  contract
+                uniswap_router = self.w3.eth.contract(
+                    address=router_address, abi=router_abi
+                )
+                # Set the deadline for 5 minutes
+                deadline = int(time.time()) + 5 * 60
+                # Build transaction for router
+                txn = uniswap_router.functions.swapExactETHForTokens(
+                    0,  # The minimum amount of token you want to receive
+                    [weth_address, self.token_address],  # The path of the swap
+                    self.address,  # Recipient of the output tokens
+                    deadline,
+                ).build_transaction(
+                    {
+                        "from": self.address,
+                        "value": self.w3.toWei(int(self.quantity), "ether"),
+                        "gasPrice": self.gas_price,
+                        "nonce": self.w3.eth.get_transaction_count(self.address),
+                    }
+                )
+
+                txn.update({"gas": self.estimate_gas(txn)})
+                signed_txn = self.w3.eth.account.sign_transaction(txn, self.private_key)
+                txn = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
+                print(style.GREEN + "Transaction sent: " + style.RESET + str(txn.hex()))
+                txn_receipt = self.w3.eth.wait_for_transaction_receipt(
+                    txn, timeout=self.timeout
+                )
+                if txn_receipt["status"] == 1:
+                    return True, print(
+                        style.GREEN + "Transaction successful!" + style.RESET
+                    )
+                else:
+                    return False, print(style.RED + "Transaction failed!" + style.RESET)
+            except Exception as e:
+                print(e)
+                trys -= 1
+                print(style.RED + "Transaction failed, retrying..." + style.RESET)
+                time.sleep(1)
