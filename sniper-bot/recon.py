@@ -1,4 +1,3 @@
-# pylint: disable=missing-module-docstring
 # pylint: disable=invalid-name
 import requests
 import json
@@ -6,12 +5,7 @@ import pprint
 from datetime import datetime, timedelta
 from typing import Dict, List
 from goplus.token import Token
-from txns import connect as rpc
-
-# Uniswap factory address and its respective ABI
-factory_address = "0x8909Dc15e40173Ff4699343b6eB8132c65e18eC6"
-with open("abis/uniswapV2.abi.json", encoding="utf-8") as f:
-    factory_abi = json.load(f)
+from connect import connect as rpc
 
 
 class Recon:

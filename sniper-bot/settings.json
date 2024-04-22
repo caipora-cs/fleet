@@ -1,11 +1,11 @@
 {
-    "YOUR_ADDRESS": "",
+    "YOUR_ADDRESS": "0x6ebfF870D020c4D900dA729567DA867Cd4F6E856",
     "YOUR_PRIVATE_KEY": "",
     "RPC_ENDPOINT": "https://api.developer.coinbase.com/rpc/v1/base/K6JT5NIkXJ7yyIh6Mtgxt6WJACLrPaN8",
-    "gwei_gas": 8,
-    "max_fee_eth": 0.01,
+    "gwei_gas": 0.03,
+    "max_fee_eth": 0.001,
     "slippage": 10,
     "min_liquidity_usd": 20000,
     "timeout":120, 
-    "savegascost":true
+    "savegascost":false
 }
