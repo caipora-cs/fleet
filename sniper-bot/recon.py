@@ -9,6 +9,8 @@ from connect import connect as rpc
 from connect import (
     factory_address,
     factory_abi,
+    factory_address_v3,
+    factory_abi_v3,
 )
 
 
@@ -20,6 +22,9 @@ class Recon:
         # Your RPC link connection
         self.w3 = rpc()
         self.contract = self.w3.eth.contract(address=factory, abi=factory_abi)
+        self.contract_v3 = self.w3.eth.contract(
+            address=factory_address_v3, abi=factory_abi_v3
+        )
 
     def get_last_pairs(self, how_many: int = 10) -> List[Dict[str, str]]:
         """Get the last pairs created on the factory contract."""
@@ -44,6 +49,30 @@ class Recon:
             pairs.append({"token0": token0, "token1": token1, "pair": pair})
 
         return pairs
+
+    def get_last_pairs_v3(self, how_many: int = 10) -> List[Dict[str, str]]:
+        """Get the last pairs created on the factory contract."""
+        latest_block = self.w3.eth.block_number
+        start_block = max(0, latest_block - 500)
+        events = []
+
+        while len(events) < how_many and start_block >= 0:
+            new_events = self.contract_v3.events.PoolCreated.get_logs(
+                fromBlock=start_block, toBlock=min(start_block + 500, latest_block)
+            )
+            events.extend(new_events)
+            start_block -= 500
+
+        last_events = events[-how_many:]
+        pools = []
+        for event in last_events:
+            token0 = event["args"]["token0"]
+            token1 = event["args"]["token1"]
+            pool = event["args"]["pool"]
+
+            pools.append({"token0": token0, "token1": token1, "pool": pool})
+
+        return pools
 
     def parse_pairs(self, pairs: List[Dict[str, str]]) -> List[str]:
         """Check which token is not WETH and return the list of them for security check."""
@@ -155,8 +184,11 @@ def main():
     pp = pprint.PrettyPrinter(indent=4)
     # recon.run()
     pairs = recon.get_last_pairs()
-    print("All last pairs:")
+    pairs_v3 = recon.get_last_pairs_v3()
+    print("All last pairs from UniV2:")
     pp.pprint(pairs)
+    print("All last pairs from UniV3:")
+    pp.pprint(pairs_v3)
     non_weth_pairs = recon.parse_pairs(pairs)
     print("All Non WETH pairs:")
     pp.pprint(non_weth_pairs)
