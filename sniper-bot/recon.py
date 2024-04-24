@@ -6,6 +6,10 @@ from datetime import datetime, timedelta
 from typing import Dict, List
 from goplus.token import Token
 from connect import connect as rpc
+from connect import (
+    factory_address,
+    factory_abi,
+)
 
 
 class Recon:
@@ -90,7 +94,7 @@ class Recon:
                 non_weth_token in security["result"]
                 and security["result"][non_weth_token]["is_open_source"] == "1"
             ):
-                pair_data = self.screener(chain_id="base", pair_address=pair)
+                pair_data = self.screener_by_pair(chain_id="base", pair_address=pair)
                 print(json.dumps(pair_data, indent=4))
                 if pair_data and pair_data["pair"]["liquidity"]["usd"] > 20000:
                     print("PREPARE TO BUY")
