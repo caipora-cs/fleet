@@ -257,13 +257,22 @@ class Transaction:
         txn_hash = self.w3.eth.send_raw_transaction(signed_txn.rawTransaction)
         return txn_hash
 
-    def wait_for_transaction_receipt(self, txn_hash):
+    def wait_for_transaction_receipt(self, txn_hash, timeout=300):
         """Wait for a transaction to be mined and return the transaction receipt."""
+        start_time = time.time()
         while True:
-            txn_receipt = self.w3.eth.get_transaction_receipt(txn_hash)
-            if txn_receipt is not None:
-                return txn_receipt
-            time.sleep(1)
+            try:
+                txn_receipt = self.w3.eth.get_transaction_receipt(txn_hash)
+                if txn_receipt is not None:
+                    return txn_receipt
+            except TransactionNotFound:
+                # If the transaction is not found, wait for a second and try again
+                time.sleep(1)
+            if time.time() - start_time > timeout:
+                # If the timeout is reached, raise an exception
+                raise TimeoutError(
+                    f"Transaction {txn_hash} not found after {timeout} seconds"
+                )
 
     def check_allowance(self, spender, amount):
         """Check if the spender has enough allowance."""
@@ -358,7 +367,7 @@ def main():
     print("Block high: " + str(transaction.get_block_high()))
     print("Output token to ETH: " + str(transaction.get_output_token_to_eth()))
     print("Buying token...")
-    # transaction.buy_token()
+    transaction.buy_token()
     print("Aproving token for sell...")
     if not transaction.check_allowance(
         router_address, transaction.get_output_token_to_eth()
