@@ -51,7 +51,7 @@ class Recon:
         return pairs
 
     def get_last_pairs_v3(self, how_many: int = 10) -> List[Dict[str, str]]:
-        """Get the last pairs created on the factory contract."""
+        """Get the last pairs created on the factory contract. This one uses Pools for Uniswap V3 factory arquiteture."""
         latest_block = self.w3.eth.block_number
         start_block = max(0, latest_block - 500)
         events = []
@@ -180,29 +180,52 @@ class Recon:
 
 def main():
     """Main function to run the bot."""
+    # instantiate the Recon class
     recon = Recon(factory_address)
     pp = pprint.PrettyPrinter(indent=4)
-    # recon.run()
+    # recon.run() #uncomment this line to run the bot in real time monitoring
+
+    # Get uniV2 and uniV3 pairs
     pairs = recon.get_last_pairs()
     pairs_v3 = recon.get_last_pairs_v3()
     print("All last pairs from UniV2:")
     pp.pprint(pairs)
     print("All last pairs from UniV3:")
     pp.pprint(pairs_v3)
+
+    # Parse the pairs to get the non WETH addresses
     non_weth_pairs = recon.parse_pairs(pairs)
-    print("All Non WETH pairs:")
+    non_weth_pairs_v3 = recon.parse_pairs(pairs_v3)
+    print("All Non WETH pairs from UniV2:")
     pp.pprint(non_weth_pairs)
+    print("All Non WETH pairs from UniV3:")
+    pp.pprint(non_weth_pairs_v3)
+
+    # Check the security of the non WETH pairs
     security_data_objects = recon.check_security(non_weth_pairs)
+    security_data_objects_v3 = recon.check_security(non_weth_pairs_v3)
     # print("All security data:")
     # pp.pprint(security_data_objects)
+    # pp.pprint(security_data_objects_v3)
+
+    # Get the open source objects
     open_source_objects = recon.get_open_source(security_data_objects)
-    print("All open source objects:")
+    open_source_objects_v3 = recon.get_open_source(security_data_objects_v3)
+    print("All open source objects from UniV2:")
     pp.pprint(open_source_objects)
-    for token in open_source_objects:
+    print("All open source objects from UniV3:")
+    pp.pprint(open_source_objects_v3)
+
+    # Check the liquidity and timestamp of the open source objects
+    for token in open_source_objects and open_source_objects_v3:
         token_address = list(token["result"].keys())[0]
         token_data = recon.screener_by_token(token_address)
         pp.pprint(token_data)
-        if token_data and token_data["pairs"]:
+        if (
+            token_data
+            and token_data["pairs"]
+            and "pairCreatedAt" in token_data["pairs"][0]
+        ):
             timestamp_ms_to_s = token_data["pairs"][0]["pairCreatedAt"] / 1000.0
             dt_object = datetime.fromtimestamp(timestamp_ms_to_s)
             now = datetime.now()
