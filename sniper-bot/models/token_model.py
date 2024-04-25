@@ -42,7 +42,7 @@ class Volume:
 class TokenData:
     """TokenData dataclass"""
 
-    pairId: str
+    pair_id: str
     tokens: list
     token0: str
     token1: str
@@ -61,7 +61,7 @@ class TokenData:
 
 # Example data
 data = {
-    "pairId": "0xaFafFc47072FD2ac75e15D0CA4700852e293725f",
+    "pair_id": "0xaFafFc47072FD2ac75e15D0CA4700852e293725f",
     "tokens": [
         "0x92Ea8f2b711076cC08a734a8e9cD57D3963EbfFf",
         "0x4200000000000000000000000000000000000006",

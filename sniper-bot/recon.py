@@ -12,6 +12,7 @@ from connect import (
     factory_address_v3,
     factory_abi_v3,
 )
+from models.token_model import TokenData, Volume, Security, PriceChange
 
 
 class Recon:
@@ -177,6 +178,64 @@ class Recon:
         for _ in range(iterations):
             self.get_new_pairs()
 
+    def create_token_data(self, security_data_object, token_data):
+        """Create a TokenData object from the security_data_object and token_data. For storing porpuses."""
+        # Extract the necessary information from the security_data_object
+        token_address = list(security_data_object["result"].keys())[0]
+        security_info = security_data_object["result"][token_address]
+        security = Security(
+            is_airdrop_scam=security_info["is_airdrop_scam"],
+            is_anti_whale=security_info["is_anti_whale"],
+            is_blacklisted=security_info["is_blacklisted"],
+            is_honeypot=security_info["is_honeypot"],
+            is_in_dex=security_info["is_in_dex"],
+            is_mintable=security_info["is_mintable"],
+            is_proxy=security_info["is_proxy"],
+            is_whitelisted=security_info["is_whitelisted"],
+            sell_tax=security_info["sell_tax"],
+            trading_cooldown=security_info["trading_cooldown"],
+            transfer_pausable=security_info["transfer_pausable"],
+        )
+
+        # Extract the necessary information from the token_data
+        pair_info = token_data["pairs"][0]
+        price_change = PriceChange(
+            h1=pair_info["priceChange"]["h1"],
+            h24=pair_info["priceChange"]["h24"],
+            h6=pair_info["priceChange"]["h6"],
+            m5=pair_info["priceChange"]["m5"],
+        )
+        volume = Volume(
+            h1=pair_info["volume"]["h1"],
+            h24=pair_info["volume"]["h24"],
+            h6=pair_info["volume"]["h6"],
+            m5=pair_info["volume"]["m5"],
+        )
+
+        # Create the TokenData object
+        token_data = TokenData(
+            pair_id=pair_info["pairAddress"],
+            tokens=[
+                pair_info["baseToken"]["address"],
+                pair_info["quoteToken"]["address"],
+            ],
+            token0=pair_info["baseToken"]["address"],
+            token1=pair_info["quoteToken"]["address"],
+            security=security,
+            name=pair_info["baseToken"]["name"],
+            symbol=pair_info["baseToken"]["symbol"],
+            fdv=pair_info["fdv"],
+            liquidity_usd=pair_info["liquidity"]["usd"],
+            creation_timestamp=pair_info["pairCreatedAt"],
+            price_change=price_change,
+            volume=volume,
+            time_scanned=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            buy_signal=pair_info["liquidity"]["usd"] > 20000,
+            website=pair_info["url"],
+        )
+
+        return token_data
+
 
 def main():
     """Main function to run the bot."""
@@ -188,10 +247,10 @@ def main():
     # Get uniV2 and uniV3 pairs
     pairs = recon.get_last_pairs()
     pairs_v3 = recon.get_last_pairs_v3()
-    print("All last pairs from UniV2:")
-    pp.pprint(pairs)
-    print("All last pairs from UniV3:")
-    pp.pprint(pairs_v3)
+    # print("All last pairs from UniV2:")
+    # pp.pprint(pairs)
+    # print("All last pairs from UniV3:")
+    # pp.pprint(pairs_v3)
 
     # Parse the pairs to get the non WETH addresses
     non_weth_pairs = recon.parse_pairs(pairs)
@@ -211,16 +270,18 @@ def main():
     # Get the open source objects
     open_source_objects = recon.get_open_source(security_data_objects)
     open_source_objects_v3 = recon.get_open_source(security_data_objects_v3)
-    print("All open source objects from UniV2:")
-    pp.pprint(open_source_objects)
-    print("All open source objects from UniV3:")
-    pp.pprint(open_source_objects_v3)
+    # add both together for later use
+    open_source_objects.extend(open_source_objects_v3)
+    # print("All open source objects from UniV2:")
+    # pp.pprint(open_source_objects)
+    # print("All open source objects from UniV3:")
+    # pp.pprint(open_source_objects_v3)
 
     # Check the liquidity and timestamp of the open source objects
-    for token in open_source_objects and open_source_objects_v3:
+    for token in open_source_objects:
         token_address = list(token["result"].keys())[0]
         token_data = recon.screener_by_token(token_address)
-        pp.pprint(token_data)
+        # pp.pprint(token_data)
         if (
             token_data
             and token_data["pairs"]
@@ -237,6 +298,15 @@ def main():
                 print("Pair created more than 5 minutes ago")
             if token_data["pairs"][0]["liquidity"]["usd"] > 20000:
                 print("PREPARE TO BUY")
+
+    # if token_data and "pairs" in token_data and token_data["pairs"]:
+    #     for security_data_object, token_data in zip(
+    #         open_source_objects, token_data
+    #     ):
+    #         token_data_object = recon.create_token_data(
+    #             security_data_object, token_data
+    #         )
+    #         print(token_data_object)
 
 
 if __name__ == "__main__":
