@@ -17,6 +17,21 @@ class Security:
     trading_cooldown: bool
     transfer_pausable: bool
 
+    def __repr__(self) -> str:
+        return (
+            f"\t\tIs Airdrop Scam: {self.is_airdrop_scam}\n"
+            f"\t\tIs Anti Whale: {self.is_anti_whale}\n"
+            f"\t\tIs Blacklisted: {self.is_blacklisted}\n"
+            f"\t\tIs Honeypot: {self.is_honeypot}\n"
+            f"\t\tIs In DEX: {self.is_in_dex}\n"
+            f"\t\tIs Mintable: {self.is_mintable}\n"
+            f"\t\tIs Proxy: {self.is_proxy}\n"
+            f"\t\tIs Whitelisted: {self.is_whitelisted}\n"
+            f"\t\tSell Tax: {self.sell_tax}\n"
+            f"\t\tTrading Cooldown: {self.trading_cooldown}\n"
+            f"\t\tTransfer Pausable: {self.transfer_pausable}"
+        )
+
 
 @dataclasses.dataclass
 class PriceChange:
@@ -27,6 +42,14 @@ class PriceChange:
     h6: float
     m5: float
 
+    def __repr__(self) -> str:
+        return (
+            f"\t\tH1: {self.h1}\n"
+            f"\t\tH24: {self.h24}\n"
+            f"\t\tH6: {self.h6}\n"
+            f"\t\tM5: {self.m5}"
+        )
+
 
 @dataclasses.dataclass
 class Volume:
@@ -36,6 +59,14 @@ class Volume:
     h24: float
     h6: float
     m5: float
+
+    def __repr__(self) -> str:
+        return (
+            f"\t\tH1: {self.h1}\n"
+            f"\t\tH24: {self.h24}\n"
+            f"\t\tH6: {self.h6}\n"
+            f"\t\tM5: {self.m5}"
+        )
 
 
 @dataclasses.dataclass
@@ -57,6 +88,25 @@ class TokenData:
     time_scanned: str
     buy_signal: bool
     website: str
+
+    def __repr__(self):
+        return (
+            f"\tPair ID: {self.pair_id}\n"
+            f"\tTokens: {self.tokens}\n"
+            f"\tToken0: {self.token0}\n"
+            f"\tToken1: {self.token1}\n"
+            f"\tSecurity: {self.security}\n"
+            f"\tName: {self.name}\n"
+            f"\tSymbol: {self.symbol}\n"
+            f"\tFDV: {self.fdv}\n"
+            f"\tLiquidity USD: {self.liquidity_usd}\n"
+            f"\tCreation Timestamp: {self.creation_timestamp}\n"
+            f"\tPrice Change: {self.price_change}\n"
+            f"\tVolume: {self.volume}\n"
+            f"\tTime Scanned: {self.time_scanned}\n"
+            f"\tBuy Signal: {self.buy_signal}\n"
+            f"\tWebsite: {self.website}"
+        )
 
 
 # Example data

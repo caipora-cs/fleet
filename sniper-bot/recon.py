@@ -226,7 +226,9 @@ class Recon:
             symbol=pair_info["baseToken"]["symbol"],
             fdv=pair_info["fdv"],
             liquidity_usd=pair_info["liquidity"]["usd"],
-            creation_timestamp=pair_info["pairCreatedAt"],
+            creation_timestamp=datetime.fromtimestamp(
+                pair_info["pairCreatedAt"] / 1000.0
+            ),
             price_change=price_change,
             volume=volume,
             time_scanned=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
