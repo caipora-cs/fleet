@@ -281,6 +281,9 @@ def main():
     for token in open_source_objects:
         token_address = list(token["result"].keys())[0]
         token_data = recon.screener_by_token(token_address)
+        if token_data and "pairs" in token_data and token_data["pairs"]:
+            token_data_object = recon.create_token_data(token, token_data)
+            pp.pprint(token_data_object)
         # pp.pprint(token_data)
         if (
             token_data
