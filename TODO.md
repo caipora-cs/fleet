@@ -71,3 +71,20 @@ recon.py:
 
 Monitoring and Logging
     -CloudWatch
+
+
+Para melhorar a performance do script:
+
+1. **Evite operações desnecessárias**: Se você está realizando a mesma operação várias vezes, considere armazenar o resultado em uma variável e reutilizá-la.
+
+2. **Use estruturas de dados eficientes**: Dependendo do seu caso de uso, diferentes estruturas de dados podem ter melhor desempenho. Por exemplo, se você precisa verificar se um item está em uma lista, um conjunto (`set`) é mais eficiente do que uma lista (`list`).
+
+3. **Paralelização**: Se você está processando uma grande quantidade de dados e cada peça de dados pode ser processada independentemente, você pode ser capaz de usar paralelização para dividir o trabalho entre vários núcleos de CPU ou até mesmo várias máquinas.
+
+4. **Profiling**: Use ferramentas de profiling para identificar as partes do seu código que estão levando mais tempo. Isso pode ajudá-lo a focar seus esforços de otimização onde eles terão o maior impacto.
+
+5. **Evite bloqueios desnecessários**: Se o seu código está esperando por I/O (como uma solicitação de rede), considere se você pode fazer essa espera de forma assíncrona para que seu código possa continuar fazendo trabalho útil enquanto espera.
+
+6. **Caching**: Se você está fazendo solicitações de rede ou consultas de banco de dados que retornam os mesmos resultados repetidamente, considere usar um cache para armazenar os resultados e reutilizá-los.
+
+No seu caso específico, parece que você está fazendo várias solicitações de rede (`recon.screener_by_token`). Se essas solicitações são independentes, você pode ser capaz de paralelizá-las para melhorar o desempenho. Além disso, se você está fazendo as mesmas solicitações repetidamente, um cache pode ser útil.

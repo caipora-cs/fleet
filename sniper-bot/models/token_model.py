@@ -1,4 +1,5 @@
 import dataclasses
+from style import style
 
 
 @dataclasses.dataclass
@@ -19,7 +20,7 @@ class Security:
 
     def __repr__(self) -> str:
         return (
-            f"\t\tIs Airdrop Scam: {self.is_airdrop_scam}\n"
+            f"\n\t\tIs Airdrop Scam: {self.is_airdrop_scam}\n"
             f"\t\tIs Anti Whale: {self.is_anti_whale}\n"
             f"\t\tIs Blacklisted: {self.is_blacklisted}\n"
             f"\t\tIs Honeypot: {self.is_honeypot}\n"
@@ -44,7 +45,7 @@ class PriceChange:
 
     def __repr__(self) -> str:
         return (
-            f"\t\tH1: {self.h1}\n"
+            f"\n\t\tH1: {self.h1}\n"
             f"\t\tH24: {self.h24}\n"
             f"\t\tH6: {self.h6}\n"
             f"\t\tM5: {self.m5}"
@@ -62,7 +63,7 @@ class Volume:
 
     def __repr__(self) -> str:
         return (
-            f"\t\tH1: {self.h1}\n"
+            f"\n\t\tH1: {self.h1}\n"
             f"\t\tH24: {self.h24}\n"
             f"\t\tH6: {self.h6}\n"
             f"\t\tM5: {self.m5}"
@@ -91,8 +92,10 @@ class TokenData:
 
     def __repr__(self):
         return (
-            f"\tPair ID: {self.pair_id}\n"
-            f"\tTokens: {self.tokens}\n"
+            style.MAGENTA
+            + f"\t\nPair ID: {self.pair_id}\n"
+            + style.RESET
+            + f"\tTokens: {self.tokens}\n"
             f"\tToken0: {self.token0}\n"
             f"\tToken1: {self.token1}\n"
             f"\tSecurity: {self.security}\n"

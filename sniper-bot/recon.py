@@ -4,6 +4,7 @@ import json
 import pprint
 from datetime import datetime, timedelta
 from typing import Dict, List
+from style import style
 from goplus.token import Token
 from connect import connect as rpc
 from connect import (
@@ -257,9 +258,9 @@ def main():
     # Parse the pairs to get the non WETH addresses
     non_weth_pairs = recon.parse_pairs(pairs)
     non_weth_pairs_v3 = recon.parse_pairs(pairs_v3)
-    print("All Non WETH pairs from UniV2:")
+    print(style.CYAN + "All tokens from UniV2:" + style.RESET)
     pp.pprint(non_weth_pairs)
-    print("All Non WETH pairs from UniV3:")
+    print(style.CYAN + "All tokens from UniV3:" + style.RESET)
     pp.pprint(non_weth_pairs_v3)
 
     # Check the security of the non WETH pairs
@@ -296,13 +297,18 @@ def main():
             dt_object = datetime.fromtimestamp(timestamp_ms_to_s)
             now = datetime.now()
             diff = now - dt_object
-            print(f"Pair created at: {dt_object}")
+            print(
+                style.CYAN
+                + "\nSignal:"
+                + style.RESET
+                + f"\nPair created at: {dt_object}"
+            )
             if diff < timedelta(minutes=5):
                 print("Pair created less than 5 minutes ago")
             else:
                 print("Pair created more than 5 minutes ago")
             if token_data["pairs"][0]["liquidity"]["usd"] > 20000:
-                print("PREPARE TO BUY")
+                print("Liquididty is greater than 20000")
 
     # if token_data and "pairs" in token_data and token_data["pairs"]:
     #     for security_data_object, token_data in zip(
