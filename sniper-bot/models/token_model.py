@@ -1,5 +1,5 @@
 import dataclasses
-from style import style
+from ..style import style
 
 
 @dataclasses.dataclass
