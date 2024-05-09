@@ -61,25 +61,32 @@ class Transaction:
         self.timeout = keys["timeout"]
         self.safegas = keys["savegascost"]
         self.slippage = keys["slippage"]
+        self.dir_path = os.path.dirname(os.path.realpath(__file__))
 
     # Methods
     def setup_token_contract(self):
         """Set up the token contract."""
-        with open("abis/erc20.abi.json", encoding="utf-8") as f:
+        with open(
+            os.path.join(self.dir_path, "../abis/erc20.abi.json"), encoding="utf-8"
+        ) as f:
             erc20_abi = json.load(f)
         token_contract = self.w3.eth.contract(address=self.token_address, abi=erc20_abi)
         return token_contract
 
     def setup_gas(self):
         """Set up the gas price and a max gas you are willing to accept."""
-        with open("settings.json", encoding="utf-8") as f:
+        with open(
+            os.path.join(self.dir_path, "../settings.json"), encoding="utf-8"
+        ) as f:
             keys = json.load(f)
         gas_price = self.w3.eth.gas_price
         return keys["max_fee_eth"], gas_price
 
     def setup_address(self):
         """Does check validation of the address and private key."""
-        with open("settings.json", encoding="utf-8") as f:
+        with open(
+            os.path.join(self.dir_path, "../settings.json"), encoding="utf-8"
+        ) as f:
             keys = json.load(f)
         if len(keys["YOUR_ADDRESS"]) <= 41:
             print(
@@ -165,7 +172,7 @@ class Transaction:
     # Buy Logic
     def buy_token(self, retry: int = 1):
         """Buy tokens with a given amount of ETH. Retry if the transaction fails. cheap or fast"""
-        if self.safegas != True:
+        if self.safegas is not True:
             return self.buy_token_fast(retry)
         else:
             return NotImplementedError(
@@ -174,6 +181,7 @@ class Transaction:
         #   return self.buy_token_cheap(retry)
 
     def buy_token_fast(self, trys):
+        """Buy tokens with a given amount of ETH. Retry if the transaction fails. Main logic of buy feature. """
         while trys:
             try:
                 # Get the Uniswap router  contract
@@ -281,6 +289,7 @@ class Transaction:
         return allowance >= amount
 
     def sell_tokens(self, percent: int = 100):
+        """Sell tokens with a given amount of ETH."""
         token_balance = self.get_output_token_to_eth(percent)
         if token_balance > 0:
             amount_for_sell = int((token_balance / 100) * percent)
@@ -297,6 +306,7 @@ class Transaction:
             print(style.RED + "No tokens to sell!" + style.RESET)
 
     def sell_tokens_fast(self, amount: float):
+        """Sell tokens with a given amount of ETH. Main logic of sell feature."""
         try:
             uniswap_router = self.w3.eth.contract(
                 address=router_address, abi=router_abi

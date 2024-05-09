@@ -1,8 +1,8 @@
 import boto3
-
+import dataclasses
 # from botocore.exceptions import ClientError
 from sniper_bot.utils.style import style
-
+from sniper_bot.models.token_model import TokenData
 
 class DynamoDB:
     def __init__(self) -> None:
@@ -10,6 +10,7 @@ class DynamoDB:
         self.client = boto3.client(
             "application-autoscaling"
         )  # The AWS SDK for Python (Boto3) to make connections
+        self.table = self.dynamodb.Table("TokenData")
 
     def create_table(self):
         """Create the TokenData table in DynamoDB. It will provision a scalable read and write capacity."""
@@ -86,10 +87,45 @@ class DynamoDB:
             },
         )
 
+    # CRUD operations
+    def create_item(self, token_data: TokenData):
+        self.table.put_item(Item=dataclasses.asdict(token_data))
+
+    def read_item(self, pair_id: str):
+        response = self.table.get_item(
+            Key={
+                'pair_id': pair_id,
+            }
+        )
+        item = response.get('Item')
+        return TokenData(**item) if item else None
+
+    def update_item(self, pair_id: str, token_data: TokenData):
+        item = dataclasses.asdict(token_data)
+        update_expression = "SET " + ", ".join(f"{k} = :{k}" for k in item.keys())
+        expression_attribute_values = {f":{k}": v for k, v in item.items()}
+        self.table.update_item(
+            Key={
+                'pair_id': pair_id,
+            },
+            UpdateExpression=update_expression,
+            ExpressionAttributeValues=expression_attribute_values
+        )
+
+    def delete_item(self, pair_id: str):
+        self.table.delete_item(
+            Key={
+                'pair_id': pair_id,
+            }
+        )
+
+        
+
 
 def main():
     db = DynamoDB()
-    db.create_table()
+    # Create the table in DynamoDB for first time
+    # db.create_table()
 
 
 if __name__ == "__main__":
