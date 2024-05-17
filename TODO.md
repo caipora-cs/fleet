@@ -88,3 +88,11 @@ Para melhorar a performance do script:
 6. **Caching**: Se você está fazendo solicitações de rede ou consultas de banco de dados que retornam os mesmos resultados repetidamente, considere usar um cache para armazenar os resultados e reutilizá-los.
 
 No seu caso específico, parece que você está fazendo várias solicitações de rede (`recon.screener_by_token`). Se essas solicitações são independentes, você pode ser capaz de paralelizá-las para melhorar o desempenho. Além disso, se você está fazendo as mesmas solicitações repetidamente, um cache pode ser útil.
+
+
+Fleet: The Sniper Bot is a sophisticated trading automator designed for the blockchain environment. Its primary purpose is to automate your trading strategies, allowing for a hands-off approach to cryptocurrency trading. By leveraging the programmability of blockchain technology, the bot can execute trades based on predefined conditions and strategies, eliminating the need for manual intervention.
+
+Blockchain programmability refers to the ability to write code (smart contracts) that runs directly on the blockchain. This code can automate complex transactions, create decentralized applications, and much more. It's a powerful feature that opens up a world of possibilities for automating financial transactions and creating decentralized applications.
+
+Automating your trading strategies with a tool like Fleet: The Sniper Bot can be highly beneficial. It allows you to execute trades 24/7, react to market conditions more quickly than a human could, and eliminate emotional decision-making from your trading. Furthermore, the bot is designed to be self-sustaining, auto-healing, and auto-scaling, meaning it can adapt to changing market conditions, recover from failures, and handle increasing load as your trading volume grows.
+
