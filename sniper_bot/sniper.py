@@ -54,13 +54,33 @@ class Sniper:
     def open_positions(self):
         """Retrieve all tokens with active bought and their status"""
         raise NotImplementedError
-
+    
+    def process_pairs(self, pairs):
+        """Process pairs to be used in the bot"""
+        parsed_pairs = self.recon.parse_pairs(pairs)
+        security_data = self.recon.check_security(parsed_pairs)
+        os_data = self.recon.get_open_source(security_data)
+        return os_data
 
 def main():
     """Main function."""
+    #Instantiate Recon and Transaction classes to be used in Sniper 
     recon = Recon(factory_address)
     txn = Transaction(token_address, quantity)
     sniper = Sniper(recon, txn)
+
+    #Utils    
+    pp = pprint.PrettyPrinter(indent=4)
+
+    #Recon 
+    #---------------------------
+    #Prepare Recon data
+    token_pairs = recon.get_last_pairs()
+    token_pairs_v3 = recon.get_last_pairs_v3()
+    os_data = sniper.process_pairs(token_pairs) 
+    os_data_v3 = sniper.process_pairs(token_pairs_v3) 
+    os_data.extend(os_data_v3)
+    
 
 if __name__ == "__main__":
     main()
