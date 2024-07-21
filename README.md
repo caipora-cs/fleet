@@ -1,11 +1,17 @@
 [![My Skills](https://skillicons.dev/icons?i=linux,aws,dynamodb,kubernetes,obsidian,py,solidity,)](https://skillicons.dev)
 
-#### **Fleet**
+<div align= "center">
+<svg height="40" width="200" xmlns="http://www.w3.org/2000/svg">
+  <text x="5" y="30" fill="none" stroke="pink" font-size="35">fleet</text>
+</svg>
+</div> 
+---
+
 The trading bot operates by monitoring decentralized exchanges (DEX) and centralized exchanges (CEX) to identify new token pairs, assess their security, and execute trades based on predefined conditions. The bot is designed to work with Uniswap on the DEX side and Binance on the CEX side, utilizing the ccxt library for API calls to Binance.
 
 To understand how our sniper bot strategy works on Uniswap, it's important to grasp the basics of how Uniswap operates. Uniswap, a popular decentralized exchange, relies on three main smart contracts: Factory, Pair, and Router.
 
-### Uniswap's Main Smart Contracts:
+#### Uniswap's Main Smart Contracts:
 
 1. **Factory Contract**:
     - This contract is responsible for creating and managing liquidity pools. When a new liquidity pool is created, it generates a unique contract for that pool and issues LP (Liquidity Provider) tokens to the providers.
