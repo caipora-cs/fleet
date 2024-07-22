@@ -1,7 +1,7 @@
 [![My Skills](https://skillicons.dev/icons?i=linux,aws,dynamodb,kubernetes,obsidian,py,solidity,)](https://skillicons.dev)
 
 <div align="center">
- ![fleet](./assets/fleet.svg)
+  <img src="./assets/fleet.svg" alt="fleet">
 </div>
 
 The trading bot operates by monitoring decentralized exchanges (DEX) and centralized exchanges (CEX) to identify new token pairs, assess their security, and execute trades based on predefined conditions. The bot is designed to work with Uniswap on the DEX side and Binance on the CEX side, utilizing the ccxt library for API calls to Binance.
